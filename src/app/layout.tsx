@@ -9,8 +9,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Landing page",
-  description: "A simple landing page built with Next.js and Tailwind CSS",
+  title: "Michael's AI Lander",
+  description: "Landing page for Michael's AI apps",
 };
 
 export default function RootLayout({
