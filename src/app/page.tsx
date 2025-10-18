@@ -16,7 +16,7 @@ function WordCycler() {
         setCurrentIndex((prev) => (prev + 1) % words.length);
         setIsAnimating(false);
       }, 188);
-    }, 6600);
+    }, 2666);
 
     return () => clearInterval(interval);
   }, [words.length]);
