@@ -739,15 +739,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-reconciler@npm:^0.28.9":
-  version: 0.28.9
-  resolution: "@types/react-reconciler@npm:0.28.9"
-  peerDependencies:
-    "@types/react": "*"
-  checksum: 10c0/9fe71fa856aab2cd4742fe0416bdd4f5c82ecc05ef6451ee7fcb65a5efdf5fa588f5820fbe2a665b15371b0da3bfc4097f28bb6d450b9a834af2d0fc00f403bd
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:^18.3.22":
   version: 18.3.26
   resolution: "@types/react@npm:18.3.26"
@@ -1300,17 +1291,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bippy@npm:^0.3.17":
-  version: 0.3.29
-  resolution: "bippy@npm:0.3.29"
-  dependencies:
-    "@types/react-reconciler": "npm:^0.28.9"
-  peerDependencies:
-    react: ">=17.0.1"
-  checksum: 10c0/621a23133107fba19b623ab3c1b8be8142494a05dd62aca5fd0affed290ef321c541b181d6c95b07c2e972208d02405dc1e449893dfa8d51eccb373569f400bb
-  languageName: node
-  linkType: hard
-
 "brace-expansion@npm:^1.1.7":
   version: 1.1.12
   resolution: "brace-expansion@npm:1.1.12"
@@ -1448,26 +1428,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-variance-authority@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "class-variance-authority@npm:0.7.1"
-  dependencies:
-    clsx: "npm:^2.1.1"
-  checksum: 10c0/0f438cea22131808b99272de0fa933c2532d5659773bfec0c583de7b3f038378996d3350683426b8e9c74a6286699382106d71fbec52f0dd5fbb191792cccb5b
-  languageName: node
-  linkType: hard
-
 "client-only@npm:0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 10c0/9d6cfd0c19e1c96a434605added99dff48482152af791ec4172fb912a71cff9027ff174efd8cdb2160cc7f377543e0537ffc462d4f279bc4701de3f2a3c4b358
-  languageName: node
-  linkType: hard
-
-"clsx@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "clsx@npm:2.1.1"
-  checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
   languageName: node
   linkType: hard
 
@@ -3054,15 +3018,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.475.0":
-  version: 0.475.0
-  resolution: "lucide-react@npm:0.475.0"
-  peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/9cb17bd4e70da4db104874b6b2e9d9c7e2be9438e9d1c0b2565df0c4d0bdd1add41b7dff3cb60840699ecbd29870c453878b42b69a7c46480def0c9370a852a9
-  languageName: node
-  linkType: hard
-
 "make-fetch-happen@npm:^14.0.3":
   version: 14.0.3
   resolution: "make-fetch-happen@npm:14.0.3"
@@ -3325,19 +3280,13 @@ __metadata:
     "@types/node": "npm:^20.17.50"
     "@types/react": "npm:^18.3.22"
     "@types/react-dom": "npm:^18.3.7"
-    class-variance-authority: "npm:^0.7.1"
-    clsx: "npm:^2.1.1"
     eslint: "npm:^9.27.0"
     eslint-config-next: "npm:15.1.7"
-    lucide-react: "npm:^0.475.0"
     next: "npm:^15.3.2"
     postcss: "npm:^8.5.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    same-runtime: "npm:^0.0.1"
-    tailwind-merge: "npm:^3.3.0"
     tailwindcss: "npm:^3.4.17"
-    tailwindcss-animate: "npm:^1.0.7"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -3960,15 +3909,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"same-runtime@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "same-runtime@npm:0.0.1"
-  dependencies:
-    bippy: "npm:^0.3.17"
-  checksum: 10c0/975f4c2092a7c1393ef1ad64d8f69b50143ff319366ce9586d8f48e9e4dcfbd87e348138549bf7c26d7eea4cc0f08fbba07f27703729f51dfdf13c65ee22cbe0
-  languageName: node
-  linkType: hard
-
 "scheduler@npm:^0.23.2":
   version: 0.23.2
   resolution: "scheduler@npm:0.23.2"
@@ -4424,22 +4364,6 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
-  languageName: node
-  linkType: hard
-
-"tailwind-merge@npm:^3.3.0":
-  version: 3.3.1
-  resolution: "tailwind-merge@npm:3.3.1"
-  checksum: 10c0/b84c6a78d4669fa12bf5ab8f0cdc4400a3ce0a7c006511af4af4be70bb664a27466dbe13ee9e3b31f50ddf6c51d380e8192ce0ec9effce23ca729d71a9f63818
-  languageName: node
-  linkType: hard
-
-"tailwindcss-animate@npm:^1.0.7":
-  version: 1.0.7
-  resolution: "tailwindcss-animate@npm:1.0.7"
-  peerDependencies:
-    tailwindcss: "*"
-  checksum: 10c0/ec7dbd1631076b97d66a1fbaaa06e0725fccfa63119221e8d87a997b02dcede98ad88bb1ef6665b968f5d260fcefb10592e0299ca70208d365b37761edf5e19a
   languageName: node
   linkType: hard
 

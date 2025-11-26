@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+
 import { useState, useEffect } from "react";
 
 // Word cycler component
@@ -23,9 +23,8 @@ function WordCycler() {
 
   return (
     <span
-      className={`relative inline-block transition-all duration-500 ${
-        isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-      }`}
+      className={`relative inline-block transition-all duration-500 ${isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+        }`}
     >
       <span className="relative z-10 italic">{words[currentIndex]}</span>
       <span className="absolute inset-0 bg-pink-200 -rotate-1 rounded" />
@@ -154,8 +153,8 @@ export default function Home() {
 
         {/* Main Heading */}
         <h1 className="text-2xl md:text-4xl font-bold">
-          Build <WordCycler /> apps 
-          <br/>
+          Build <WordCycler /> apps
+          <br />
           with ài.
         </h1>
       </header>
