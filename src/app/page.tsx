@@ -157,6 +157,7 @@ function LockIcon() {
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -330,24 +331,32 @@ export default function Home() {
   const handleLogin = () => {
     setShowPasswordDialog(true);
     setError("");
+    setUsername("");
     setPassword("");
   };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Check password against environment variable
-    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
+    const correctUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
-    if (password === correctPassword) {
+    if (!correctUsername || !correctPassword) {
+      setError("Auth is not configured. Please set admin username and password.");
+      return;
+    }
+
+    if (username === correctUsername && password === correctPassword) {
       setIsLoggedIn(true);
       if (typeof window !== "undefined") {
         window.localStorage.setItem("michael_admin_logged_in", "true");
       }
       setShowPasswordDialog(false);
+      setUsername("");
       setPassword("");
       setError("");
     } else {
-      setError("Incorrect password");
+      setError("Incorrect username or password");
     }
   };
 
@@ -399,15 +408,22 @@ export default function Home() {
       {showPasswordDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h2 className="text-xl font-bold mb-4">Enter Password</h2>
+            <h2 className="text-xl font-bold mb-4">Admin Login</h2>
             <form onSubmit={handlePasswordSubmit}>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-black"
+                autoFocus
+              />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-black"
-                autoFocus
               />
               {error && (
                 <p className="text-red-600 text-sm mb-4">{error}</p>
@@ -423,6 +439,7 @@ export default function Home() {
                   type="button"
                   onClick={() => {
                     setShowPasswordDialog(false);
+                    setUsername("");
                     setPassword("");
                     setError("");
                   }}
