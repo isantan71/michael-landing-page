@@ -188,12 +188,12 @@ export default function Home() {
         },
         {
           name: "Backend API (Production)",
-          description: "deployed on Baidu-lightvm",
+          description: "Deployed on Baidu-lightvm",
           link: "https://baidu-python-moviefans.345321.xyz/docs",
         },
         {
           name: "Backend API (Staging)",
-          description: "deployed on Vercel",
+          description: "Deployed on Vercel, 0xMichaelRan",
           link: "https://staging-python-moviefans.vercel.app/docs",
         },
       ],
@@ -237,16 +237,28 @@ export default function Home() {
           description: "Staging environment for testing",
           link: "https://staging--oneyumi.netlify.app/",
         },
-        {
-          name: "Backend API",
-          description: "Backend API endpoint",
-          link: "https://api.oneyumi.com/",
-        },
       ],
     },
   ];
 
   const playgroundProducts = [
+    {
+      name: "Michael Landing Page",
+      description: "Experimental AI chat interface with custom models",
+      bgColor: "#7c3aed",
+      urls: [
+        {
+          name: "Production",
+          description: "Deployed on Netlify, isantan71",
+          link: "https://michael.345321.xyz/",
+        },
+        {
+          name: "Staging",
+          description: "Deployed on Netlify, isantan71",
+          link: "https://staging--michael345.netlify.app/",
+        },
+      ],
+    },
     {
       name: "AI Chat Sandbox",
       description: "Experimental AI chat interface with custom models",
