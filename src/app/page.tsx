@@ -62,7 +62,7 @@ function Logo() {
 function ProductIcon({ bgColor, icon }: { bgColor: string; icon: string }) {
   return (
     <div
-      className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg"
+      className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
       style={{ backgroundColor: bgColor }}
     >
       {icon}
@@ -406,7 +406,7 @@ export default function Home() {
                         href={url.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block p-3 bg-white rounded-md border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all group"
+                        className="block w-full max-w-full p-3 bg-white rounded-md border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all group overflow-hidden"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
@@ -431,7 +431,7 @@ export default function Home() {
                             <p className="text-xs text-gray-500 mb-1">
                               {url.description}
                             </p>
-                            <p className="text-xs text-gray-400 truncate font-mono">
+                            <p className="text-xs text-gray-400 break-all font-mono overflow-hidden">
                               {url.link}
                             </p>
                           </div>
@@ -450,12 +450,10 @@ export default function Home() {
       {isLoggedIn && (
         <section className="max-w-[640px] mx-auto mt-16 space-y-4">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
-              <span className="text-white text-sm">⚡</span>
-            </div>
+            
             <h2 className="text-xl font-bold text-gray-900">Playground</h2>
             <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
-              Internal
+              Private
             </span>
           </div>
           {playgroundProducts.map((product) => (
@@ -477,7 +475,7 @@ export default function Home() {
                         href={url.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block p-3 bg-white rounded-md border border-violet-200 hover:border-violet-300 hover:shadow-sm transition-all group"
+                        className="block w-full max-w-full p-3 bg-white rounded-md border border-violet-200 hover:border-violet-300 hover:shadow-sm transition-all group overflow-hidden"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
@@ -502,7 +500,7 @@ export default function Home() {
                             <p className="text-xs text-gray-500 mb-1">
                               {url.description}
                             </p>
-                            <p className="text-xs text-violet-400 truncate font-mono">
+                            <p className="text-xs text-violet-400 break-all font-mono overflow-hidden">
                               {url.link}
                             </p>
                           </div>
