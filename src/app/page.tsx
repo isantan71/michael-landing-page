@@ -267,38 +267,34 @@ export default function Home() {
       {/* Products Section */}
       <section className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
         {products.map((product) => (
-          <div
+          <a
             key={product.name}
-            className="block bg-zinc-50 p-4 rounded-lg"
+            href={product.productionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-zinc-50 p-4 rounded-lg hover:bg-zinc-100 transition-colors"
           >
             <article className="flex items-start gap-4">
               <ProductIcon bgColor={product.bgColor} icon={product.icon} />
               <div className="flex-1">
                 <h3 className="font-bold text-sm">{product.name}</h3>
                 <p className="text-sm text-gray-500 mb-3">{product.description}</p>
-                <div className="flex gap-2 flex-wrap">
-                  <a
-                    href={product.productionUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-green-100 text-green-800 hover:bg-green-200 transition-colors"
-                  >
-                    Production
-                  </a>
-                  {isLoggedIn && (
+                {isLoggedIn && (
+                  <div className="flex gap-2 flex-wrap">
                     <a
                       href={product.stagingUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors"
                     >
                       Staging
                     </a>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </article>
-          </div>
+          </a>
         ))}
       </section>
 
