@@ -187,9 +187,14 @@ export default function Home() {
           link: "https://moviefans-staging.345321.xyz/",
         },
         {
-          name: "Backend API",
-          description: "Backend API endpoint",
-          link: "https://api.moviefans.345321.xyz/",
+          name: "Backend API (Production)",
+          description: "deployed on Baidu-lightvm",
+          link: "https://baidu-python-moviefans.345321.xyz/docs",
+        },
+        {
+          name: "Backend API (Staging)",
+          description: "deployed on Vercel",
+          link: "https://staging-python-moviefans.vercel.app/docs",
         },
       ],
     },
