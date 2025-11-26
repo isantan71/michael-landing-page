@@ -61,7 +61,7 @@ function Logo() {
 
 // Product icon component
 function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
-  const IconComponent = productIcons[name];
+  const iconValue = productIcons[name];
 
   const fallback = name
     .split(" ")
@@ -71,12 +71,27 @@ function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
     .join("")
     .toUpperCase();
 
+  let content: JSX.Element | string = fallback;
+
+  if (typeof iconValue === "string") {
+    content = (
+      <img
+        src={iconValue}
+        alt={name}
+        className="w-5 h-5 object-contain"
+      />
+    );
+  } else if (iconValue) {
+    const IconComponent = iconValue;
+    content = <IconComponent />;
+  }
+
   return (
     <div
       className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
       style={{ backgroundColor: bgColor }}
     >
-      {IconComponent ? <IconComponent /> : fallback}
+      {content}
     </div>
   );
 }
@@ -170,7 +185,7 @@ export default function Home() {
       ],
     },
     {
-      name: "Swiss",
+      name: "Super Swiss",
       description: "AI-powered Swiss army knife toolkit",
       bgColor: "#457b9d",
       productionUrl: "https://superswiss.vercel.app",
