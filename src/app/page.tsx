@@ -2,6 +2,7 @@
 
 
 import { useState, useEffect } from "react";
+import { productIcons } from "./icons/products";
 
 // Word cycler component
 function WordCycler() {
@@ -59,13 +60,38 @@ function Logo() {
 }
 
 // Product icon component
-function ProductIcon({ bgColor, icon }: { bgColor: string; icon: string }) {
+function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
+  const iconValue = productIcons[name];
+
+  const fallback = name
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  let content: JSX.Element | string = fallback;
+
+  if (typeof iconValue === "string") {
+    content = (
+      <img
+        src={iconValue}
+        alt={name}
+        className="w-7 h-7 object-contain"
+      />
+    );
+  } else if (iconValue) {
+    const IconComponent = iconValue;
+    content = <IconComponent />;
+  }
+
   return (
     <div
-      className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg"
+      className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
       style={{ backgroundColor: bgColor }}
     >
-      {icon}
+      {content}
     </div>
   );
 }
@@ -134,30 +160,153 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const stored = window.localStorage.getItem("michael_admin_logged_in");
+    if (stored === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const products = [
     {
       name: "MovieFans",
       description: "Movie database and subtitle management platform",
-      icon: "M",
       bgColor: "#e63946",
-      stagingUrl: "https://moviefans-staging.345321.xyz/",
       productionUrl: "https://moviefans.345321.xyz/",
+      urls: [
+        {
+          name: "Production",
+          description: "Live production environment",
+          link: "https://moviefans.345321.xyz/",
+        },
+        {
+          name: "Staging",
+          description: "Staging environment for testing",
+          link: "https://moviefans-staging.345321.xyz/",
+        },
+        {
+          name: "Backend API",
+          description: "Backend API endpoint",
+          link: "https://api.moviefans.345321.xyz/",
+        },
+      ],
     },
     {
-      name: "Swiss",
+      name: "Super Swiss",
       description: "AI-powered Swiss army knife toolkit",
-      icon: "S",
       bgColor: "#457b9d",
-      stagingUrl: "https://superswiss-staging.vercel.app",
       productionUrl: "https://superswiss.vercel.app",
+      urls: [
+        {
+          name: "Production",
+          description: "Live production environment",
+          link: "https://superswiss.vercel.app",
+        },
+        {
+          name: "Staging",
+          description: "Staging environment for testing",
+          link: "https://superswiss-staging.vercel.app",
+        },
+        {
+          name: "Backend API",
+          description: "Backend API endpoint",
+          link: "https://api.superswiss.vercel.app",
+        },
+      ],
     },
     {
       name: "OneYumi",
       description: "Modern web application platform",
-      icon: "Y",
       bgColor: "#f77f00",
-      stagingUrl: "https://staging--oneyumi.netlify.app/",
       productionUrl: "https://www.oneyumi.com/",
+      urls: [
+        {
+          name: "Production",
+          description: "Live production environment",
+          link: "https://www.oneyumi.com/",
+        },
+        {
+          name: "Staging",
+          description: "Staging environment for testing",
+          link: "https://staging--oneyumi.netlify.app/",
+        },
+        {
+          name: "Backend API",
+          description: "Backend API endpoint",
+          link: "https://api.oneyumi.com/",
+        },
+      ],
+    },
+  ];
+
+  const playgroundProducts = [
+    {
+      name: "AI Chat Sandbox",
+      description: "Experimental AI chat interface with custom models",
+      bgColor: "#7c3aed",
+      urls: [
+        {
+          name: "Development",
+          description: "Local development environment",
+          link: "https://chat-dev.345321.xyz/",
+        },
+        {
+          name: "Staging",
+          description: "Staging environment for testing",
+          link: "https://chat-staging.345321.xyz/",
+        },
+        {
+          name: "API Playground",
+          description: "Interactive API testing",
+          link: "https://api-playground.345321.xyz/",
+        },
+      ],
+    },
+    {
+      name: "Design System",
+      description: "Component library and design tokens explorer",
+      bgColor: "#a855f7",
+      urls: [
+        {
+          name: "Storybook",
+          description: "Component documentation",
+          link: "https://storybook.345321.xyz/",
+        },
+        {
+          name: "Figma Sync",
+          description: "Design-to-code sync tool",
+          link: "https://figma-sync.345321.xyz/",
+        },
+        {
+          name: "Theme Builder",
+          description: "Custom theme generator",
+          link: "https://theme.345321.xyz/",
+        },
+      ],
+    },
+    {
+      name: "Data Pipeline",
+      description: "ETL workflows and data visualization experiments",
+      bgColor: "#8b5cf6",
+      urls: [
+        {
+          name: "Dashboard",
+          description: "Analytics dashboard prototype",
+          link: "https://dashboard-dev.345321.xyz/",
+        },
+        {
+          name: "Pipeline Monitor",
+          description: "Real-time pipeline status",
+          link: "https://pipeline.345321.xyz/",
+        },
+        {
+          name: "Data Explorer",
+          description: "Interactive data browser",
+          link: "https://explorer.345321.xyz/",
+        },
+      ],
     },
   ];
 
@@ -174,6 +323,9 @@ export default function Home() {
 
     if (password === correctPassword) {
       setIsLoggedIn(true);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("michael_admin_logged_in", "true");
+      }
       setShowPasswordDialog(false);
       setPassword("");
       setError("");
@@ -184,6 +336,9 @@ export default function Home() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("michael_admin_logged_in");
+    }
   };
 
   return (
@@ -267,36 +422,148 @@ export default function Home() {
       {/* Products Section */}
       <section className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
         {products.map((product) => (
-          <a
+          <div
             key={product.name}
-            href={product.productionUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block bg-zinc-50 p-4 rounded-lg hover:bg-zinc-100 transition-colors"
+            className="bg-zinc-50 p-4 rounded-lg"
           >
-            <article className="flex items-start gap-4">
-              <ProductIcon bgColor={product.bgColor} icon={product.icon} />
+            <article
+              className="flex items-start gap-4 cursor-pointer"
+              onClick={() => {
+                if (!isLoggedIn) {
+                  if (product.productionUrl) {
+                    if (typeof window !== "undefined") {
+                      window.open(product.productionUrl, "_blank", "noopener,noreferrer");
+                    }
+                  } else {
+                    console.error(
+                      `Missing productionUrl for product: ${product.name}`,
+                    );
+                  }
+                }
+              }}
+            >
+              <ProductIcon bgColor={product.bgColor} name={product.name} />
               <div className="flex-1">
                 <h3 className="font-bold text-sm">{product.name}</h3>
                 <p className="text-sm text-gray-500 mb-3">{product.description}</p>
+
+                {/* URL List - Only visible when logged in */}
                 {isLoggedIn && (
-                  <div className="flex gap-2 flex-wrap">
-                    <a
-                      href={product.stagingUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors"
-                    >
-                      Staging
-                    </a>
+                  <div className="space-y-2 mt-4">
+                    {product.urls.map((url) => (
+                      <a
+                        key={url.name}
+                        href={url.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full max-w-full p-3 bg-white rounded-md border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all group overflow-hidden"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs font-semibold text-gray-900">
+                                {url.name}
+                              </span>
+                              <svg
+                                className="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            </div>
+                            <p className="text-xs text-gray-500 mb-1">
+                              {url.description}
+                            </p>
+                            <p className="text-xs text-gray-400 break-all font-mono overflow-hidden">
+                              {url.link}
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 )}
               </div>
             </article>
-          </a>
+          </div>
         ))}
       </section>
+
+      {/* Playground Section - Only visible when logged in */}
+      {isLoggedIn && (
+        <section className="max-w-[640px] mx-auto mt-16 space-y-4">
+          <div className="flex items-center gap-3 mb-6">
+            
+            <h2 className="text-xl font-bold text-gray-900">Playground</h2>
+            <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
+              Private
+            </span>
+          </div>
+          {playgroundProducts.map((product) => (
+            <div
+              key={product.name}
+              className="bg-violet-50 p-4 rounded-lg border border-violet-100"
+            >
+              <article className="flex items-start gap-4">
+                <ProductIcon bgColor={product.bgColor} name={product.name} />
+                <div className="flex-1">
+                  <h3 className="font-bold text-sm">{product.name}</h3>
+                  <p className="text-sm text-gray-500 mb-3">{product.description}</p>
+
+                  {/* URL List */}
+                  <div className="space-y-2 mt-4">
+                    {product.urls.map((url) => (
+                      <a
+                        key={url.name}
+                        href={url.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full max-w-full p-3 bg-white rounded-md border border-violet-200 hover:border-violet-300 hover:shadow-sm transition-all group overflow-hidden"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs font-semibold text-gray-900">
+                                {url.name}
+                              </span>
+                              <svg
+                                className="w-3 h-3 text-violet-400 group-hover:text-violet-600 transition-colors flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            </div>
+                            <p className="text-xs text-gray-500 mb-1">
+                              {url.description}
+                            </p>
+                            <p className="text-xs text-violet-400 break-all font-mono overflow-hidden">
+                              {url.link}
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="flex justify-center gap-4 py-24 mt-24">
