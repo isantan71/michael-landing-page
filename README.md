@@ -11,6 +11,7 @@ A modern, beautiful landing page built with Next.js 15, React 18, and Tailwind C
 - 📱 Mobile-first responsive layout
 - 🎯 TypeScript for type safety
 - 🧹 Biome for code formatting and linting
+- 🔐 Password-protected access to staging URLs
 
 ## Tech Stack
 
@@ -27,6 +28,16 @@ A modern, beautiful landing page built with Next.js 15, React 18, and Tailwind C
 
 - Node.js 20.x or higher
 - Yarn package manager
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variable:
+
+```bash
+NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password_here
+```
+
+This password is used to authenticate users who want to access staging environment URLs. If not set, the default password is `admin123`.
 
 ### Development
 
