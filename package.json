@@ -1,11 +1,11 @@
 {
-  "name": "nextjs-tailwind",
-  "version": "0.1.0",
+  "name": "michael_345321xyz",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 20001 -H 0.0.0.0 --turbopack",
+    "dev": "next dev -p 3013 -H 0.0.0.0 --turbopack",
     "build": "next build",
-    "start": "next start -p 20001 -H 0.0.0.0",
+    "start": "next start -p 3013 -H 0.0.0.0",
     "lint": "tsc --noEmit && next lint",
     "format": "npx @biomejs/biome format --write"
   },
