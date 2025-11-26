@@ -2,6 +2,7 @@
 
 
 import { useState, useEffect } from "react";
+import { productIcons } from "./icons/products";
 
 // Word cycler component
 function WordCycler() {
@@ -59,13 +60,23 @@ function Logo() {
 }
 
 // Product icon component
-function ProductIcon({ bgColor, icon }: { bgColor: string; icon: string }) {
+function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
+  const IconComponent = productIcons[name];
+
+  const fallback = name
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
   return (
     <div
       className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
       style={{ backgroundColor: bgColor }}
     >
-      {icon}
+      {IconComponent ? <IconComponent /> : fallback}
     </div>
   );
 }
@@ -138,7 +149,6 @@ export default function Home() {
     {
       name: "MovieFans",
       description: "Movie database and subtitle management platform",
-      icon: "M",
       bgColor: "#e63946",
       productionUrl: "https://moviefans.345321.xyz/",
       urls: [
@@ -162,7 +172,6 @@ export default function Home() {
     {
       name: "Swiss",
       description: "AI-powered Swiss army knife toolkit",
-      icon: "S",
       bgColor: "#457b9d",
       productionUrl: "https://superswiss.vercel.app",
       urls: [
@@ -186,7 +195,6 @@ export default function Home() {
     {
       name: "OneYumi",
       description: "Modern web application platform",
-      icon: "Y",
       bgColor: "#f77f00",
       productionUrl: "https://www.oneyumi.com/",
       urls: [
@@ -213,7 +221,6 @@ export default function Home() {
     {
       name: "AI Chat Sandbox",
       description: "Experimental AI chat interface with custom models",
-      icon: "🤖",
       bgColor: "#7c3aed",
       urls: [
         {
@@ -236,7 +243,6 @@ export default function Home() {
     {
       name: "Design System",
       description: "Component library and design tokens explorer",
-      icon: "🎨",
       bgColor: "#a855f7",
       urls: [
         {
@@ -259,7 +265,6 @@ export default function Home() {
     {
       name: "Data Pipeline",
       description: "ETL workflows and data visualization experiments",
-      icon: "📊",
       bgColor: "#8b5cf6",
       urls: [
         {
@@ -392,7 +397,7 @@ export default function Home() {
             className="bg-zinc-50 p-4 rounded-lg"
           >
             <article className="flex items-start gap-4">
-              <ProductIcon bgColor={product.bgColor} icon={product.icon} />
+              <ProductIcon bgColor={product.bgColor} name={product.name} />
               <div className="flex-1">
                 <h3 className="font-bold text-sm">{product.name}</h3>
                 <p className="text-sm text-gray-500 mb-3">{product.description}</p>
@@ -462,7 +467,7 @@ export default function Home() {
               className="bg-violet-50 p-4 rounded-lg border border-violet-100"
             >
               <article className="flex items-start gap-4">
-                <ProductIcon bgColor={product.bgColor} icon={product.icon} />
+                <ProductIcon bgColor={product.bgColor} name={product.name} />
                 <div className="flex-1">
                   <h3 className="font-bold text-sm">{product.name}</h3>
                   <p className="text-sm text-gray-500 mb-3">{product.description}</p>
