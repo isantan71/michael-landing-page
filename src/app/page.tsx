@@ -160,6 +160,15 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const stored = window.localStorage.getItem("michael_admin_logged_in");
+    if (stored === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const products = [
     {
       name: "MovieFans",
@@ -314,6 +323,9 @@ export default function Home() {
 
     if (password === correctPassword) {
       setIsLoggedIn(true);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("michael_admin_logged_in", "true");
+      }
       setShowPasswordDialog(false);
       setPassword("");
       setError("");
@@ -324,6 +336,9 @@ export default function Home() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("michael_admin_logged_in");
+    }
   };
 
   return (
