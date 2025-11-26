@@ -30,7 +30,7 @@ export const DataPipelineIcon: React.FC = () => (
 
 // Mapping from product names to icons
 export const productIcons: Record<string, React.FC | string | undefined> = {
-  MovieFans: MovieFansIcon,
+  MovieFans: "/icons/moviefans.png",
   "Super Swiss": SwissIcon,
   OneYumi: "/icons/oneyumi.svg",
   "AI Chat Sandbox": AIChatSandboxIcon,
