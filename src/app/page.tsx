@@ -426,7 +426,22 @@ export default function Home() {
             key={product.name}
             className="bg-zinc-50 p-4 rounded-lg"
           >
-            <article className="flex items-start gap-4">
+            <article
+              className="flex items-start gap-4 cursor-pointer"
+              onClick={() => {
+                if (!isLoggedIn) {
+                  if (product.productionUrl) {
+                    if (typeof window !== "undefined") {
+                      window.open(product.productionUrl, "_blank", "noopener,noreferrer");
+                    }
+                  } else {
+                    console.error(
+                      `Missing productionUrl for product: ${product.name}`,
+                    );
+                  }
+                }
+              }}
+            >
               <ProductIcon bgColor={product.bgColor} name={product.name} />
               <div className="flex-1">
                 <h3 className="font-bold text-sm">{product.name}</h3>
