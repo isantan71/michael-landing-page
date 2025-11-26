@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+
 import { useState, useEffect } from "react";
 
 // Word cycler component
@@ -23,9 +23,8 @@ function WordCycler() {
 
   return (
     <span
-      className={`relative inline-block transition-all duration-500 ${
-        isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-      }`}
+      className={`relative inline-block transition-all duration-500 ${isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+        }`}
     >
       <span className="relative z-10 italic">{words[currentIndex]}</span>
       <span className="absolute inset-0 bg-pink-200 -rotate-1 rounded" />
@@ -111,42 +110,106 @@ function GitHubIcon() {
   );
 }
 
+// Lock icon for login button
+function LockIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zm0 2c1.654 0 3 1.346 3 3v3H9V7c0-1.654 1.346-3 3-3z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const products = [
     {
-      name: "AI Browser Extension",
-      description: "AI browser extension",
-      icon: "B",
-      bgColor: "#a2af4a",
-      href: "/",
+      name: "MovieFans",
+      description: "Movie database and subtitle management platform",
+      icon: "M",
+      bgColor: "#e63946",
+      stagingUrl: "https://moviefans-staging.345321.xyz/",
+      productionUrl: "https://moviefans.345321.xyz/",
     },
     {
-      name: "B",
-      description: "A lightweight file converter",
-      icon: "P",
-      bgColor: "#5da55c",
-      href: "/",
+      name: "Swiss",
+      description: "AI-powered Swiss army knife toolkit",
+      icon: "S",
+      bgColor: "#457b9d",
+      stagingUrl: "https://superswiss-staging.vercel.app",
+      productionUrl: "https://superswiss.vercel.app",
     },
     {
-      name: "N",
-      description: "hello worlds",
-      icon: "N",
-      bgColor: "#d4c05f",
-      href: "/",
-    },
-    {
-      name: "C",
-      description: "GUI for Claude Code",
-      icon: "C",
-      bgColor: "#b46249",
-      href: "/",
+      name: "OneYumi",
+      description: "Modern web application platform",
+      icon: "Y",
+      bgColor: "#f77f00",
+      stagingUrl: "https://staging--oneyumi.netlify.app/",
+      productionUrl: "https://www.oneyumi.com/",
     },
   ];
+
+  const handleLogin = () => {
+    setShowPasswordDialog(true);
+    setError("");
+    setPassword("");
+  };
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Check password against environment variable
+    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
+
+    if (password === correctPassword) {
+      setIsLoggedIn(true);
+      setShowPasswordDialog(false);
+      setPassword("");
+      setError("");
+    } else {
+      setError("Incorrect password");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
     <main className="min-h-screen bg-white px-6 md:px-0">
       {/* Header */}
       <header className="text-center pt-24 md:pt-48 space-y-4">
+        {/* Login Button - Top Right */}
+        <div className="absolute top-6 right-6">
+          {!isLoggedIn ? (
+            <button
+              onClick={handleLogin}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <LockIcon />
+              Login
+            </button>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Logout
+            </button>
+          )}
+        </div>
+
         {/* Logo */}
         <div className="flex justify-center mb-8">
           <Logo />
@@ -154,27 +217,81 @@ export default function Home() {
 
         {/* Main Heading */}
         <h1 className="text-2xl md:text-4xl font-bold">
-          Build <WordCycler /> apps 
-          <br/>
+          Build <WordCycler /> apps
+          <br />
           with ài.
         </h1>
       </header>
+
+      {/* Password Dialog */}
+      {showPasswordDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h2 className="text-xl font-bold mb-4">Enter Password</h2>
+            <form onSubmit={handlePasswordSubmit}>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-black"
+                autoFocus
+              />
+              {error && (
+                <p className="text-red-600 text-sm mb-4">{error}</p>
+              )}
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPasswordDialog(false);
+                    setPassword("");
+                    setError("");
+                  }}
+                  className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Products Section */}
       <section className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
         {products.map((product) => (
           <a
             key={product.name}
-            href={product.href}
-            target={product.href.startsWith("http") ? "_blank" : "_self"}
-            rel={product.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            href={product.productionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="block bg-zinc-50 p-4 rounded-lg hover:bg-zinc-100 transition-colors"
           >
-            <article className="flex items-center gap-4">
+            <article className="flex items-start gap-4">
               <ProductIcon bgColor={product.bgColor} icon={product.icon} />
-              <div>
+              <div className="flex-1">
                 <h3 className="font-bold text-sm">{product.name}</h3>
-                <p className="text-sm text-gray-500">{product.description}</p>
+                <p className="text-sm text-gray-500 mb-3">{product.description}</p>
+                {isLoggedIn && (
+                  <div className="flex gap-2 flex-wrap">
+                    <a
+                      href={product.stagingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors"
+                    >
+                      Staging
+                    </a>
+                  </div>
+                )}
               </div>
             </article>
           </a>
