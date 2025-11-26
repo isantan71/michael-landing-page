@@ -78,7 +78,7 @@ function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
       <img
         src={iconValue}
         alt={name}
-        className="w-5 h-5 object-contain"
+        className="w-7 h-7 object-contain"
       />
     );
   } else if (iconValue) {
