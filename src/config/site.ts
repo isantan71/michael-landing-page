@@ -86,6 +86,15 @@ export const products: Product[] = [
                     },
                 ],
             },
+            heloworld: {
+                environments: [
+                    {
+                        name: "Hello dashboard",
+                        url: "https://example.google.xyz/",
+                        description: "database viewing dashbaord",
+                    },
+                ],
+            },
             other: {
                 environments: [
                     {
