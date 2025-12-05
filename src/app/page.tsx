@@ -172,6 +172,42 @@ function LockIcon() {
   );
 }
 
+// Eye icon for preview mode toggle
+function EyeIcon({ isPreview }: { isPreview: boolean }) {
+  if (isPreview) {
+    // Eye slash icon (preview mode active)
+    return (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+  }
+  // Eye icon (normal admin view)
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 // Category tabs component
 function CategoryTabs({
   categories,
@@ -193,10 +229,10 @@ function CategoryTabs({
           key={category}
           onClick={() => onCategoryChange(category)}
           className={`${isSingleCategory ? 'w-1/2' : 'flex-1'} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${activeCategory === category
-              ? isPlayground
-                ? "text-violet-700 border-b-2 border-violet-600"
-                : "text-gray-900 border-b-2 border-gray-900"
-              : "text-gray-500 hover:text-gray-700"
+            ? isPlayground
+              ? "text-violet-700 border-b-2 border-violet-600"
+              : "text-gray-900 border-b-2 border-gray-900"
+            : "text-gray-500 hover:text-gray-700"
             }`}
         >
           {category}
@@ -387,6 +423,7 @@ function ProductCard({
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -444,8 +481,8 @@ export default function Home() {
     <main className="min-h-screen bg-white px-6 md:px-0">
       {/* Header */}
       <header className="text-center pt-24 md:pt-48 space-y-4">
-        {/* Login Button - Top Right */}
-        <div className="absolute top-6 right-6">
+        {/* Login/Preview Buttons - Top Right */}
+        <div className="absolute top-6 right-6 flex items-center gap-2">
           {!isLoggedIn ? (
             <button
               onClick={handleLogin}
@@ -455,12 +492,25 @@ export default function Home() {
               Login
             </button>
           ) : (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              Logout
-            </button>
+            <>
+              <button
+                onClick={() => setPreviewMode(!previewMode)}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${previewMode
+                  ? "text-white bg-violet-600 hover:bg-violet-700"
+                  : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                  }`}
+                title={previewMode ? "Viewing as guest" : "View as guest"}
+              >
+                <EyeIcon isPreview={!previewMode} />
+                {previewMode ? "Guest View" : "Preview"}
+              </button>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                Logout
+              </button>
+            </>
           )}
         </div>
 
@@ -532,14 +582,14 @@ export default function Home() {
           <ProductCard
             key={product.name}
             product={product}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={isLoggedIn && !previewMode}
             isPlayground={false}
           />
         ))}
       </section>
 
-      {/* Playground Section - Only visible when logged in */}
-      {isLoggedIn && (
+      {/* Playground Section - Only visible when logged in and not in preview mode */}
+      {isLoggedIn && !previewMode && (
         <section className="max-w-[640px] mx-auto mt-16 space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-xl font-bold text-gray-900">Playground</h2>
@@ -551,7 +601,7 @@ export default function Home() {
             <ProductCard
               key={product.name}
               product={product}
-              isLoggedIn={isLoggedIn}
+              isLoggedIn={isLoggedIn && !previewMode}
               isPlayground={true}
             />
           ))}
