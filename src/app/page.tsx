@@ -8,6 +8,9 @@ import {
   playgroundProducts,
   heroWords,
   socialLinks,
+  generateColorFromString,
+  Product,
+  Environment,
 } from "@/config/site";
 
 // Word cycler component
@@ -102,6 +105,15 @@ function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
   );
 }
 
+// Port badge component
+function PortBadge({ port }: { port: number }) {
+  return (
+    <span className="inline-flex items-center px-2.5 py-1 text-xs font-mono font-semibold bg-gradient-to-r from-gray-100 to-gray-50 text-gray-800 rounded-md border border-gray-300 shadow-sm">
+      :{port}
+    </span>
+  );
+}
+
 // Twitter icon
 function TwitterIcon() {
   return (
@@ -160,6 +172,219 @@ function LockIcon() {
   );
 }
 
+// Category tabs component
+function CategoryTabs({
+  categories,
+  activeCategory,
+  onCategoryChange,
+  isPlayground = false,
+}: {
+  categories: string[];
+  activeCategory: string;
+  onCategoryChange: (category: string) => void;
+  isPlayground?: boolean;
+}) {
+  const isSingleCategory = categories.length === 1;
+
+  return (
+    <div className="flex gap-1 mb-4 border-b border-gray-200 -mx-4 px-4 md:mx-0 md:px-0">
+      {categories.map((category) => (
+        <button
+          key={category}
+          onClick={() => onCategoryChange(category)}
+          className={`${isSingleCategory ? 'w-1/2' : 'flex-1'} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${activeCategory === category
+              ? isPlayground
+                ? "text-violet-700 border-b-2 border-violet-600"
+                : "text-gray-900 border-b-2 border-gray-900"
+              : "text-gray-500 hover:text-gray-700"
+            }`}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// Environment list component
+function EnvironmentList({
+  environments,
+  port,
+  isPlayground = false,
+}: {
+  environments: Environment[];
+  port?: number;
+  isPlayground?: boolean;
+}) {
+  return (
+    <div className="space-y-2.5 -mx-4 px-4 md:mx-0 md:px-0">
+      {port !== undefined && (
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-xs font-medium text-gray-600">Port:</span>
+          <PortBadge port={port} />
+        </div>
+      )}
+      {environments.map((env) => (
+        <a
+          key={env.name}
+          href={env.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`block w-full p-3.5 md:p-3 bg-white rounded-lg border transition-all group shadow-sm hover:shadow-md ${isPlayground
+            ? "border-violet-200 hover:border-violet-400"
+            : "border-gray-200 hover:border-gray-400"
+            }`}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className={`text-xs font-bold uppercase tracking-wide ${isPlayground ? "text-violet-700" : "text-gray-900"
+                  }`}>
+                  {env.name}
+                </span>
+                <svg
+                  className={`w-3.5 h-3.5 transition-colors flex-shrink-0 ${isPlayground
+                    ? "text-violet-400 group-hover:text-violet-600"
+                    : "text-gray-400 group-hover:text-gray-600"
+                    }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </div>
+              {env.description && (
+                <p className="text-xs text-gray-600 mb-1.5 leading-relaxed">
+                  {env.description}
+                </p>
+              )}
+              <p className={`text-xs break-all font-mono leading-relaxed ${isPlayground ? "text-violet-500" : "text-gray-500"
+                }`}>
+                {env.url}
+              </p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+// Product card component
+function ProductCard({
+  product,
+  isLoggedIn,
+  isPlayground = false,
+}: {
+  product: Product;
+  isLoggedIn: boolean;
+  isPlayground?: boolean;
+}) {
+  const availableCategories = Object.keys(product.categories).filter(
+    (key) => product.categories[key as keyof typeof product.categories]
+  );
+
+  const [activeCategory, setActiveCategory] = useState(
+    availableCategories[0] || "frontend"
+  );
+
+  const bgColor = generateColorFromString(product.name);
+
+  // Guest user logic for non-playground products
+  if (!isLoggedIn && !isPlayground) {
+    const prodEnv = product.categories.frontend?.environments?.find(
+      (e) => e.name === "prod"
+    );
+
+    if (!prodEnv) {
+      return null; // Don't show product if no prod frontend URL
+    }
+
+    return (
+      <div
+        className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all cursor-pointer"
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            window.open(prodEnv.url, "_blank", "noopener,noreferrer");
+          }
+        }}
+      >
+        <article className="flex items-start gap-4">
+          <ProductIcon bgColor={bgColor} name={product.name} />
+          <div className="flex-1">
+            <h3 className="font-bold text-base mb-1">{product.name}</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+          </div>
+          <svg
+            className="w-5 h-5 text-gray-400 self-start md:self-center flex-shrink-0 hidden md:block"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+        </article>
+      </div>
+    );
+  }
+
+  // Logged-in user or playground product view
+  const currentCategory = product.categories[
+    activeCategory as keyof typeof product.categories
+  ] as any;
+
+  return (
+    <div
+      className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
+        ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
+        : "bg-white border-gray-200"
+        }`}
+    >
+      <article>
+        {/* Header Section */}
+        <div className="flex items-start gap-4 mb-5">
+          <ProductIcon bgColor={bgColor} name={product.name} />
+          <div className="flex-1">
+            <h3 className="font-bold text-base mb-1">{product.name}</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+          </div>
+        </div>
+
+        {/* Tabs and Content Section */}
+        {availableCategories.length > 0 && (
+          <div>
+            <CategoryTabs
+              categories={availableCategories}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              isPlayground={isPlayground}
+            />
+
+            {currentCategory?.environments && (
+              <EnvironmentList
+                environments={currentCategory.environments}
+                port={currentCategory.port}
+                isPlayground={isPlayground}
+              />
+            )}
+          </div>
+        )}
+      </article>
+    </div>
+  );
+}
+
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
@@ -175,10 +400,6 @@ export default function Home() {
       setIsLoggedIn(true);
     }
   }, []);
-
-
-
-
 
   const handleLogin = () => {
     setShowPasswordDialog(true);
@@ -308,77 +529,12 @@ export default function Home() {
       {/* Products Section */}
       <section className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
         {products.map((product) => (
-          <div
+          <ProductCard
             key={product.name}
-            className="bg-zinc-50 p-4 rounded-lg"
-          >
-            <article
-              className="flex items-start gap-4 cursor-pointer"
-              onClick={() => {
-                if (!isLoggedIn) {
-                  if (product.productionUrl) {
-                    if (typeof window !== "undefined") {
-                      window.open(product.productionUrl, "_blank", "noopener,noreferrer");
-                    }
-                  } else {
-                    console.error(
-                      `Missing productionUrl for product: ${product.name}`,
-                    );
-                  }
-                }
-              }}
-            >
-              <ProductIcon bgColor={product.bgColor} name={product.name} />
-              <div className="flex-1">
-                <h3 className="font-bold text-sm">{product.name}</h3>
-                <p className="text-sm text-gray-500 mb-3">{product.description}</p>
-
-                {/* URL List - Only visible when logged in */}
-                {isLoggedIn && (
-                  <div className="space-y-2 mt-4">
-                    {product.urls.map((url) => (
-                      <a
-                        key={url.name}
-                        href={url.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full max-w-full p-3 bg-white rounded-md border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all group overflow-hidden"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-semibold text-gray-900">
-                                {url.name}
-                              </span>
-                              <svg
-                                className="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-1">
-                              {url.description}
-                            </p>
-                            <p className="text-xs text-gray-400 break-all font-mono overflow-hidden">
-                              {url.link}
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </article>
-          </div>
+            product={product}
+            isLoggedIn={isLoggedIn}
+            isPlayground={false}
+          />
         ))}
       </section>
 
@@ -386,67 +542,18 @@ export default function Home() {
       {isLoggedIn && (
         <section className="max-w-[640px] mx-auto mt-16 space-y-4">
           <div className="flex items-center gap-3 mb-6">
-
             <h2 className="text-xl font-bold text-gray-900">Playground</h2>
             <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
               Private
             </span>
           </div>
           {playgroundProducts.map((product) => (
-            <div
+            <ProductCard
               key={product.name}
-              className="bg-violet-50 p-4 rounded-lg border border-violet-100"
-            >
-              <article className="flex items-start gap-4">
-                <ProductIcon bgColor={product.bgColor} name={product.name} />
-                <div className="flex-1">
-                  <h3 className="font-bold text-sm">{product.name}</h3>
-                  <p className="text-sm text-gray-500 mb-3">{product.description}</p>
-
-                  {/* URL List */}
-                  <div className="space-y-2 mt-4">
-                    {product.urls.map((url) => (
-                      <a
-                        key={url.name}
-                        href={url.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full max-w-full p-3 bg-white rounded-md border border-violet-200 hover:border-violet-300 hover:shadow-sm transition-all group overflow-hidden"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-semibold text-gray-900">
-                                {url.name}
-                              </span>
-                              <svg
-                                className="w-3 h-3 text-violet-400 group-hover:text-violet-600 transition-colors flex-shrink-0"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
-                            </div>
-                            <p className="text-xs text-gray-500 mb-1">
-                              {url.description}
-                            </p>
-                            <p className="text-xs text-violet-400 break-all font-mono overflow-hidden">
-                              {url.link}
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            </div>
+              product={product}
+              isLoggedIn={isLoggedIn}
+              isPlayground={true}
+            />
           ))}
         </section>
       )}
