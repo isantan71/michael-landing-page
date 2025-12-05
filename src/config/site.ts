@@ -86,20 +86,16 @@ export const products: Product[] = [
                     },
                 ],
             },
-            heloworld: {
+            "daba-monitoring": {
                 environments: [
                     {
-                        name: "Hello dashboard",
+                        name: "prod dashboard",
                         url: "https://example.google.xyz/",
                         description: "database viewing dashbaord",
                     },
-                ],
-            },
-            other: {
-                environments: [
                     {
-                        name: "data dashboard",
-                        url: "https://example.google.xyz/",
+                        name: "staging dashboard",
+                        url: "https://staging.google.xyz/",
                         description: "database viewing dashbaord",
                     },
                 ],
