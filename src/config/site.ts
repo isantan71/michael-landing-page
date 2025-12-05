@@ -86,6 +86,15 @@ export const products: Product[] = [
                     },
                 ],
             },
+            other: {
+                environments: [
+                    {
+                        name: "data dashboard",
+                        url: "https://example.google.xyz/",
+                        description: "database viewing dashbaord",
+                    },
+                ],
+            }
         },
     },
     {
