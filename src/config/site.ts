@@ -30,9 +30,7 @@ export interface Product {
   name: string;
   description: string;
   categories: {
-    frontend?: CategoryWithPort;
-    backend?: CategoryWithPort;
-    other?: CategoryWithoutPort;
+    [key: string]: CategoryWithPort | CategoryWithoutPort;
   };
 }
 
@@ -57,7 +55,7 @@ export const products: Product[] = [
     description: "Movie database and subtitle management platform",
     categories: {
       frontend: {
-        port: 3000,
+        port: 3008,
         environments: [
           {
             name: "prod",
@@ -72,7 +70,7 @@ export const products: Product[] = [
         ],
       },
       backend: {
-        port: 8000,
+        port: 8008,
         environments: [
           {
             name: "prod",
@@ -107,7 +105,7 @@ export const products: Product[] = [
     description: "AI-powered Swiss army knife toolkit",
     categories: {
       frontend: {
-        port: 3000,
+        port: 3012,
         environments: [
           {
             name: "prod",
@@ -122,7 +120,7 @@ export const products: Product[] = [
         ],
       },
       backend: {
-        port: 8080,
+        port: 8012,
         environments: [
           {
             name: "prod",
@@ -162,7 +160,7 @@ export const playgroundProducts: Product[] = [
     description: "Experimental AI chat interface with custom models",
     categories: {
       frontend: {
-        port: 3000,
+        port: 3013,
         environments: [
           {
             name: "prod",
