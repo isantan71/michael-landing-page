@@ -10,6 +10,8 @@ import {
   generateColorFromString,
   Product,
   Environment,
+  CategoryWithPort,
+  CategoryWithoutPort,
 } from "@/config/site";
 
 // Word cycler component
@@ -32,9 +34,8 @@ function WordCycler() {
 
   return (
     <span
-      className={`relative inline-block transition-all duration-500 ${
-        isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-      }`}
+      className={`relative inline-block transition-all duration-500 ${isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+        }`}
     >
       <span className="relative z-10 italic">{words[currentIndex]}</span>
       <span className="absolute inset-0 bg-pink-200 -rotate-1 rounded" />
@@ -224,13 +225,12 @@ function CategoryTabs({
         <button
           key={category}
           onClick={() => onCategoryChange(category)}
-          className={`${isSingleCategory ? "w-1/2" : "flex-1"} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${
-            activeCategory === category
-              ? isPlayground
-                ? "text-violet-700 border-b-2 border-violet-600"
-                : "text-gray-900 border-b-2 border-gray-900"
-              : "text-gray-500 hover:text-gray-700"
-          }`}
+          className={`${isSingleCategory ? "w-1/2" : "flex-1"} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${activeCategory === category
+            ? isPlayground
+              ? "text-violet-700 border-b-2 border-violet-600"
+              : "text-gray-900 border-b-2 border-gray-900"
+            : "text-gray-500 hover:text-gray-700"
+            }`}
         >
           {category}
         </button>
@@ -263,28 +263,25 @@ function EnvironmentList({
           href={env.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`block w-full p-3.5 md:p-3 bg-white rounded-lg border transition-all group shadow-sm hover:shadow-md ${
-            isPlayground
-              ? "border-violet-200 hover:border-violet-400"
-              : "border-gray-200 hover:border-gray-400"
-          }`}
+          className={`block w-full p-3.5 md:p-3 bg-white rounded-lg border transition-all group shadow-sm hover:shadow-md ${isPlayground
+            ? "border-violet-200 hover:border-violet-400"
+            : "border-gray-200 hover:border-gray-400"
+            }`}
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1.5">
                 <span
-                  className={`text-xs font-bold uppercase tracking-wide ${
-                    isPlayground ? "text-violet-700" : "text-gray-900"
-                  }`}
+                  className={`text-xs font-bold uppercase tracking-wide ${isPlayground ? "text-violet-700" : "text-gray-900"
+                    }`}
                 >
                   {env.name}
                 </span>
                 <svg
-                  className={`w-3.5 h-3.5 transition-colors flex-shrink-0 ${
-                    isPlayground
-                      ? "text-violet-400 group-hover:text-violet-600"
-                      : "text-gray-400 group-hover:text-gray-600"
-                  }`}
+                  className={`w-3.5 h-3.5 transition-colors flex-shrink-0 ${isPlayground
+                    ? "text-violet-400 group-hover:text-violet-600"
+                    : "text-gray-400 group-hover:text-gray-600"
+                    }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -303,9 +300,8 @@ function EnvironmentList({
                 </p>
               )}
               <p
-                className={`text-xs break-all font-mono leading-relaxed ${
-                  isPlayground ? "text-violet-500" : "text-gray-500"
-                }`}
+                className={`text-xs break-all font-mono leading-relaxed ${isPlayground ? "text-violet-500" : "text-gray-500"
+                  }`}
               >
                 {env.url}
               </p>
@@ -385,15 +381,14 @@ function ProductCard({
   // Logged-in user or playground product view
   const currentCategory = product.categories[
     activeCategory as keyof typeof product.categories
-  ] as any;
+  ] as CategoryWithPort | CategoryWithoutPort;
 
   return (
     <div
-      className={`p-5 rounded-xl border shadow-sm transition-all ${
-        isPlayground
-          ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
-          : "bg-white border-gray-200"
-      }`}
+      className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
+        ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
+        : "bg-white border-gray-200"
+        }`}
     >
       <article>
         {/* Header Section */}
@@ -420,7 +415,7 @@ function ProductCard({
             {currentCategory?.environments && (
               <EnvironmentList
                 environments={currentCategory.environments}
-                port={currentCategory.port}
+                port={'port' in currentCategory ? currentCategory.port : undefined}
                 isPlayground={isPlayground}
               />
             )}
@@ -493,7 +488,7 @@ export default function Home() {
     <main className="min-h-screen bg-white px-6 md:px-0">
       {/* Header */}
       <header className="text-center pt-24 md:pt-48 space-y-4">
-        {/* Login/Preview Buttons - Top Right */}
+        {/* Login/Logout Buttons - Top Right */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {!isLoggedIn ? (
             <button
@@ -504,25 +499,12 @@ export default function Home() {
               Login
             </button>
           ) : (
-            <>
-              <button
-                onClick={() => setPreviewMode(!previewMode)}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  previewMode
-                    ? "text-white bg-violet-600 hover:bg-violet-700"
-                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-                }`}
-                title={previewMode ? "Viewing as guest" : "View as guest"}
-              >
-                <EyeIcon isPreview={!previewMode} />
-              </button>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                Logout
-              </button>
-            </>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+            >
+              Logout
+            </button>
           )}
         </div>
 
@@ -616,6 +598,23 @@ export default function Home() {
             />
           ))}
         </section>
+      )}
+
+      {/* Floating Preview Button - Only visible when logged in */}
+      {isLoggedIn && (
+        <button
+          onClick={() => setPreviewMode(!previewMode)}
+          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${previewMode
+            ? "text-white bg-violet-600 hover:bg-violet-700"
+            : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
+            }`}
+          title={previewMode ? "Viewing as guest" : "View as guest"}
+        >
+          <EyeIcon isPreview={!previewMode} />
+          <span className="hidden sm:inline">
+            {previewMode ? "Guest View" : "Preview"}
+          </span>
+        </button>
       )}
 
       {/* Footer */}
