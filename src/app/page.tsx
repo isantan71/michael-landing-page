@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
 import { productIcons } from "./icons/products";
 import {
@@ -33,8 +32,9 @@ function WordCycler() {
 
   return (
     <span
-      className={`relative inline-block transition-all duration-500 ${isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-        }`}
+      className={`relative inline-block transition-all duration-500 ${
+        isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+      }`}
     >
       <span className="relative z-10 italic">{words[currentIndex]}</span>
       <span className="absolute inset-0 bg-pink-200 -rotate-1 rounded" />
@@ -84,11 +84,7 @@ function ProductIcon({ bgColor, name }: { bgColor: string; name: string }) {
 
   if (typeof iconValue === "string") {
     content = (
-      <img
-        src={iconValue}
-        alt={name}
-        className="w-7 h-7 object-contain"
-      />
+      <img src={iconValue} alt={name} className="w-7 h-7 object-contain" />
     );
   } else if (iconValue) {
     const IconComponent = iconValue;
@@ -228,12 +224,13 @@ function CategoryTabs({
         <button
           key={category}
           onClick={() => onCategoryChange(category)}
-          className={`${isSingleCategory ? 'w-1/2' : 'flex-1'} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${activeCategory === category
-            ? isPlayground
-              ? "text-violet-700 border-b-2 border-violet-600"
-              : "text-gray-900 border-b-2 border-gray-900"
-            : "text-gray-500 hover:text-gray-700"
-            }`}
+          className={`${isSingleCategory ? "w-1/2" : "flex-1"} md:flex-none px-4 md:px-3 py-2.5 md:py-1.5 text-xs font-semibold transition-all capitalize ${
+            activeCategory === category
+              ? isPlayground
+                ? "text-violet-700 border-b-2 border-violet-600"
+                : "text-gray-900 border-b-2 border-gray-900"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
         >
           {category}
         </button>
@@ -266,23 +263,28 @@ function EnvironmentList({
           href={env.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`block w-full p-3.5 md:p-3 bg-white rounded-lg border transition-all group shadow-sm hover:shadow-md ${isPlayground
-            ? "border-violet-200 hover:border-violet-400"
-            : "border-gray-200 hover:border-gray-400"
-            }`}
+          className={`block w-full p-3.5 md:p-3 bg-white rounded-lg border transition-all group shadow-sm hover:shadow-md ${
+            isPlayground
+              ? "border-violet-200 hover:border-violet-400"
+              : "border-gray-200 hover:border-gray-400"
+          }`}
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1.5">
-                <span className={`text-xs font-bold uppercase tracking-wide ${isPlayground ? "text-violet-700" : "text-gray-900"
-                  }`}>
+                <span
+                  className={`text-xs font-bold uppercase tracking-wide ${
+                    isPlayground ? "text-violet-700" : "text-gray-900"
+                  }`}
+                >
                   {env.name}
                 </span>
                 <svg
-                  className={`w-3.5 h-3.5 transition-colors flex-shrink-0 ${isPlayground
-                    ? "text-violet-400 group-hover:text-violet-600"
-                    : "text-gray-400 group-hover:text-gray-600"
-                    }`}
+                  className={`w-3.5 h-3.5 transition-colors flex-shrink-0 ${
+                    isPlayground
+                      ? "text-violet-400 group-hover:text-violet-600"
+                      : "text-gray-400 group-hover:text-gray-600"
+                  }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -300,8 +302,11 @@ function EnvironmentList({
                   {env.description}
                 </p>
               )}
-              <p className={`text-xs break-all font-mono leading-relaxed ${isPlayground ? "text-violet-500" : "text-gray-500"
-                }`}>
+              <p
+                className={`text-xs break-all font-mono leading-relaxed ${
+                  isPlayground ? "text-violet-500" : "text-gray-500"
+                }`}
+              >
                 {env.url}
               </p>
             </div>
@@ -323,11 +328,11 @@ function ProductCard({
   isPlayground?: boolean;
 }) {
   const availableCategories = Object.keys(product.categories).filter(
-    (key) => product.categories[key as keyof typeof product.categories]
+    (key) => product.categories[key as keyof typeof product.categories],
   );
 
   const [activeCategory, setActiveCategory] = useState(
-    availableCategories[0] || "frontend"
+    availableCategories[0] || "frontend",
   );
 
   const bgColor = generateColorFromString(product.name);
@@ -335,7 +340,7 @@ function ProductCard({
   // Guest user logic for non-playground products
   if (!isLoggedIn && !isPlayground) {
     const prodEnv = product.categories.frontend?.environments?.find(
-      (e) => e.name === "prod"
+      (e) => e.name === "prod",
     );
 
     if (!prodEnv) {
@@ -355,7 +360,9 @@ function ProductCard({
           <ProductIcon bgColor={bgColor} name={product.name} />
           <div className="flex-1">
             <h3 className="font-bold text-base mb-1">{product.name}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              {product.description}
+            </p>
           </div>
           <svg
             className="w-5 h-5 text-gray-400 self-start md:self-center flex-shrink-0 hidden md:block"
@@ -382,10 +389,11 @@ function ProductCard({
 
   return (
     <div
-      className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
-        ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
-        : "bg-white border-gray-200"
-        }`}
+      className={`p-5 rounded-xl border shadow-sm transition-all ${
+        isPlayground
+          ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
+          : "bg-white border-gray-200"
+      }`}
     >
       <article>
         {/* Header Section */}
@@ -393,7 +401,9 @@ function ProductCard({
           <ProductIcon bgColor={bgColor} name={product.name} />
           <div className="flex-1">
             <h3 className="font-bold text-base mb-1">{product.name}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              {product.description}
+            </p>
           </div>
         </div>
 
@@ -452,7 +462,9 @@ export default function Home() {
     const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
     if (!correctUsername || !correctPassword) {
-      setError("Auth is not configured. Please set admin username and password.");
+      setError(
+        "Auth is not configured. Please set admin username and password.",
+      );
       return;
     }
 
@@ -495,10 +507,11 @@ export default function Home() {
             <>
               <button
                 onClick={() => setPreviewMode(!previewMode)}
-                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${previewMode
-                  ? "text-white bg-violet-600 hover:bg-violet-700"
-                  : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-                  }`}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  previewMode
+                    ? "text-white bg-violet-600 hover:bg-violet-700"
+                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                }`}
                 title={previewMode ? "Viewing as guest" : "View as guest"}
               >
                 <EyeIcon isPreview={!previewMode} />
@@ -547,9 +560,7 @@ export default function Home() {
                 placeholder="Password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-black"
               />
-              {error && (
-                <p className="text-red-600 text-sm mb-4">{error}</p>
-              )}
+              {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
               <div className="flex gap-2">
                 <button
                   type="submit"
