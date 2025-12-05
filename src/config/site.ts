@@ -86,7 +86,7 @@ export const products: Product[] = [
                     },
                 ],
             },
-            "daba-monitoring": {
+            "daba-monitor": {
                 environments: [
                     {
                         name: "prod dashboard",

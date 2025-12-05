@@ -502,7 +502,6 @@ export default function Home() {
                 title={previewMode ? "Viewing as guest" : "View as guest"}
               >
                 <EyeIcon isPreview={!previewMode} />
-                {previewMode ? "Guest View" : "Preview"}
               </button>
               <button
                 onClick={handleLogout}
