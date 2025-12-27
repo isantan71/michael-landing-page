@@ -14,6 +14,7 @@ import { WordCycler } from "@/components/landing/WordCycler";
 import { Logo } from "@/components/landing/Logo";
 import { ProductCard } from "@/components/landing/ProductCard";
 import { SideNav } from "@/components/landing/SideNav";
+import { MiniMapEdgeBar } from "@/components/landing/MiniMapEdgeBar";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -99,19 +100,20 @@ export default function Home() {
     })),
     ...(isLoggedIn && !previewMode
       ? [
-          { id: "playground", name: "Playground" },
-          ...playgroundProducts.map((p) => ({
-            id: p.name.toLowerCase().replace(/\s+/g, "-"),
-            name: p.name,
-            parent: "playground",
-          })),
-        ]
+        { id: "playground", name: "Playground" },
+        ...playgroundProducts.map((p) => ({
+          id: p.name.toLowerCase().replace(/\s+/g, "-"),
+          name: p.name,
+          parent: "playground",
+        })),
+      ]
       : []),
   ];
 
   return (
     <main className="min-h-screen bg-white px-6 md:px-0">
       <SideNav items={navItems} activeId={activeId} />
+      <MiniMapEdgeBar items={navItems} activeId={activeId} />
       {/* Header */}
       <header className="text-center pt-24 md:pt-48 space-y-4">
         {/* Login/Logout Buttons - Top Right */}
@@ -238,11 +240,10 @@ export default function Home() {
       {isLoggedIn && (
         <button
           onClick={() => setPreviewMode(!previewMode)}
-          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${
-            previewMode
+          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${previewMode
               ? "text-white bg-violet-600 hover:bg-violet-700"
               : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
-          }`}
+            }`}
           title={previewMode ? "Viewing as guest" : "View as guest"}
         >
           <EyeIcon isPreview={!previewMode} />

@@ -15,7 +15,7 @@ export function SideNav({
       : null);
 
   return (
-    <nav className="fixed left-8 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 z-40">
+    <nav className="fixed left-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-40">
       {items.map((item) => {
         const isSubItem = !!item.parent;
         const isSelected = activeId === item.id;
@@ -37,19 +37,22 @@ export function SideNav({
             }}
           >
             <div className="w-3 flex justify-center items-center flex-shrink-0">
+              {/*
+                [x] Create Implementation Plan
+                - [/] Modify `SideNav` to be large-screen only
+                - [ ] Create `MiniMapEdgeBar` component
+              */}
               <div
-                className={`rounded-full transition-all ${
-                  isSelected
+                className={`rounded-full transition-all ${isSelected
                     ? isSubItem
                       ? "bg-gray-600 scale-125"
                       : "bg-black scale-150"
                     : "bg-gray-200 group-hover:bg-gray-300"
-                } ${isSubItem ? "w-1 h-1" : "w-1.5 h-1.5"}`}
+                  } ${isSubItem ? "w-1 h-1" : "w-1.5 h-1.5"}`}
               />
             </div>
             <span
-              className={`font-semibold tracking-wider uppercase transition-all ${
-                shouldShowText
+              className={`font-semibold tracking-wider uppercase transition-all ${shouldShowText
                   ? isSelected
                     ? isSubItem
                       ? "text-gray-600"
@@ -58,7 +61,7 @@ export function SideNav({
                       ? "text-gray-400"
                       : "text-gray-500"
                   : "text-gray-400 opacity-0 group-hover:opacity-100"
-              } ${isSubItem ? "text-[10px]" : "text-xs"}`}
+                } ${isSubItem ? "text-[10px]" : "text-xs"}`}
             >
               {item.name}
             </span>
