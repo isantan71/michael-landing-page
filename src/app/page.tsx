@@ -452,7 +452,7 @@ function SideNav({
           <a
             key={item.id}
             href={`#${item.id}`}
-            className={`group flex items-center gap-3 transition-all ${isSelected ? "translate-x-2" : "hover:translate-x-1"} ${isSubItem ? "ml-4" : ""}`}
+            className={`group flex items-center gap-2 transition-all ${isSelected ? "translate-x-1" : "hover:translate-x-0.5"}`}
             onClick={(e) => {
               e.preventDefault();
               document.getElementById(item.id)?.scrollIntoView({
@@ -460,17 +460,19 @@ function SideNav({
               });
             }}
           >
-            <div
-              className={`w-1.5 h-1.5 rounded-full transition-all ${isSelected
-                ? "bg-black scale-150"
-                : "bg-gray-300 group-hover:bg-gray-400"
-                }`}
-            />
+            <div className="w-3 flex justify-center items-center flex-shrink-0">
+              <div
+                className={`rounded-full transition-all ${isSelected
+                  ? (isSubItem ? "bg-gray-600 scale-125" : "bg-black scale-150")
+                  : "bg-gray-200 group-hover:bg-gray-300"
+                  } ${isSubItem ? "w-1 h-1" : "w-1.5 h-1.5"}`}
+              />
+            </div>
             <span
-              className={`text-xs font-semibold tracking-wider uppercase transition-all ${shouldShowText
-                ? "text-black opacity-100"
+              className={`font-semibold tracking-wider uppercase transition-all ${shouldShowText
+                ? (isSelected ? (isSubItem ? "text-gray-600" : "text-black") : (isSubItem ? "text-gray-400" : "text-gray-500"))
                 : "text-gray-400 opacity-0 group-hover:opacity-100"
-                }`}
+                } ${isSubItem ? "text-[10px]" : "text-xs"}`}
             >
               {item.name}
             </span>
@@ -488,7 +490,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [activeId, setActiveId] = useState("top");
+  const [activeId, setActiveId] = useState("projects");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -499,13 +501,13 @@ export default function Home() {
     }
 
     const handleScroll = () => {
-      const sections = document.querySelectorAll("header[id], section[id]");
-      let current = "top";
+      const sections = document.querySelectorAll("section[id]");
+      let current = "projects";
 
       for (const section of sections) {
         const sectionTop = (section as HTMLElement).offsetTop;
-        if (window.pageYOffset >= sectionTop - 100) {
-          current = section.getAttribute("id") || "top";
+        if (window.pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute("id") || "projects";
         }
       }
       setActiveId(current);
@@ -557,7 +559,6 @@ export default function Home() {
   };
 
   const navItems = [
-    { id: "top", name: "Top" },
     { id: "projects", name: "Projects" },
     ...products.map((p) => ({
       id: p.name.toLowerCase().replace(/\s+/g, "-"),
@@ -580,7 +581,7 @@ export default function Home() {
     <main className="min-h-screen bg-white px-6 md:px-0">
       <SideNav items={navItems} activeId={activeId} />
       {/* Header */}
-      <header id="top" className="text-center pt-24 md:pt-48 space-y-4">
+      <header className="text-center pt-24 md:pt-48 space-y-4">
         {/* Login/Logout Buttons - Top Right */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {!isLoggedIn ? (
