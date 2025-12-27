@@ -318,10 +318,12 @@ function ProductCard({
   product,
   isLoggedIn,
   isPlayground = false,
+  id,
 }: {
   product: Product;
   isLoggedIn: boolean;
   isPlayground?: boolean;
+  id?: string;
 }) {
   const availableCategories = Object.keys(product.categories).filter(
     (key) => product.categories[key as keyof typeof product.categories],
@@ -345,6 +347,7 @@ function ProductCard({
 
     return (
       <div
+        id={id}
         className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all cursor-pointer"
         onClick={() => {
           if (typeof window !== "undefined") {
@@ -385,6 +388,7 @@ function ProductCard({
 
   return (
     <div
+      id={id}
       className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
         ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
         : "bg-white border-gray-200"
@@ -426,6 +430,49 @@ function ProductCard({
   );
 }
 
+// Side navigation component
+function SideNav({
+  items,
+  activeId,
+}: {
+  items: { id: string; name: string }[];
+  activeId: string;
+}) {
+  return (
+    <nav className="fixed left-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-40">
+      {items.map((item) => (
+        <a
+          key={item.id}
+          href={`#${item.id}`}
+          className={`group flex items-center gap-3 transition-all ${activeId === item.id ? "translate-x-2" : "hover:translate-x-1"
+            }`}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById(item.id)?.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
+        >
+          <div
+            className={`w-1.5 h-1.5 rounded-full transition-all ${activeId === item.id
+              ? "bg-black scale-150"
+              : "bg-gray-300 group-hover:bg-gray-400"
+              }`}
+          />
+          <span
+            className={`text-xs font-semibold tracking-wider uppercase transition-all ${activeId === item.id
+              ? "text-black opacity-100"
+              : "text-gray-400 opacity-0 group-hover:opacity-100"
+              }`}
+          >
+            {item.name}
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
@@ -433,6 +480,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [activeId, setActiveId] = useState("top");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -441,6 +489,22 @@ export default function Home() {
     if (stored === "true") {
       setIsLoggedIn(true);
     }
+
+    const handleScroll = () => {
+      const sections = document.querySelectorAll("header[id], section[id]");
+      let current = "top";
+
+      for (const section of sections) {
+        const sectionTop = (section as HTMLElement).offsetTop;
+        if (window.pageYOffset >= sectionTop - 100) {
+          current = section.getAttribute("id") || "top";
+        }
+      }
+      setActiveId(current);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogin = () => {
@@ -484,10 +548,29 @@ export default function Home() {
     }
   };
 
+  const navItems = [
+    { id: "top", name: "Top" },
+    { id: "projects", name: "Projects" },
+    ...products.map((p) => ({
+      id: p.name.toLowerCase().replace(/\s+/g, "-"),
+      name: p.name,
+    })),
+    ...(isLoggedIn && !previewMode
+      ? [
+        { id: "playground", name: "Playground" },
+        ...playgroundProducts.map((p) => ({
+          id: p.name.toLowerCase().replace(/\s+/g, "-"),
+          name: p.name,
+        })),
+      ]
+      : []),
+  ];
+
   return (
     <main className="min-h-screen bg-white px-6 md:px-0">
+      <SideNav items={navItems} activeId={activeId} />
       {/* Header */}
-      <header className="text-center pt-24 md:pt-48 space-y-4">
+      <header id="top" className="text-center pt-24 md:pt-48 space-y-4">
         {/* Login/Logout Buttons - Top Right */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {!isLoggedIn ? (
@@ -569,10 +652,11 @@ export default function Home() {
       )}
 
       {/* Products Section */}
-      <section className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
+      <section id="projects" className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
         {products.map((product) => (
           <ProductCard
             key={product.name}
+            id={product.name.toLowerCase().replace(/\s+/g, '-')}
             product={product}
             isLoggedIn={isLoggedIn && !previewMode}
             isPlayground={false}
@@ -582,7 +666,7 @@ export default function Home() {
 
       {/* Playground Section - Only visible when logged in and not in preview mode */}
       {isLoggedIn && !previewMode && (
-        <section className="max-w-[640px] mx-auto mt-16 space-y-4">
+        <section id="playground" className="max-w-[640px] mx-auto mt-16 space-y-4">
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-xl font-bold text-gray-900">Playground</h2>
             <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
@@ -592,6 +676,7 @@ export default function Home() {
           {playgroundProducts.map((product) => (
             <ProductCard
               key={product.name}
+              id={product.name.toLowerCase().replace(/\s+/g, '-')}
               product={product}
               isLoggedIn={isLoggedIn && !previewMode}
               isPlayground={true}
