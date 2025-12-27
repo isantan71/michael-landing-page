@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  products,
-  playgroundProducts,
-  socialLinks,
-} from "@/config/site";
+import { products, playgroundProducts, socialLinks } from "@/config/site";
 
 // Icons
 import { TwitterIcon } from "@/components/icons/TwitterIcon";
@@ -18,8 +14,6 @@ import { WordCycler } from "@/components/landing/WordCycler";
 import { Logo } from "@/components/landing/Logo";
 import { ProductCard } from "@/components/landing/ProductCard";
 import { SideNav } from "@/components/landing/SideNav";
-
-
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -105,13 +99,13 @@ export default function Home() {
     })),
     ...(isLoggedIn && !previewMode
       ? [
-        { id: "playground", name: "Playground" },
-        ...playgroundProducts.map((p) => ({
-          id: p.name.toLowerCase().replace(/\s+/g, "-"),
-          name: p.name,
-          parent: "playground",
-        })),
-      ]
+          { id: "playground", name: "Playground" },
+          ...playgroundProducts.map((p) => ({
+            id: p.name.toLowerCase().replace(/\s+/g, "-"),
+            name: p.name,
+            parent: "playground",
+          })),
+        ]
       : []),
   ];
 
@@ -201,11 +195,14 @@ export default function Home() {
       )}
 
       {/* Products Section */}
-      <section id="projects" className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4">
+      <section
+        id="projects"
+        className="max-w-[640px] mx-auto mt-24 md:mt-24 space-y-4"
+      >
         {products.map((product) => (
           <ProductCard
             key={product.name}
-            id={product.name.toLowerCase().replace(/\s+/g, '-')}
+            id={product.name.toLowerCase().replace(/\s+/g, "-")}
             product={product}
             isLoggedIn={isLoggedIn && !previewMode}
             isPlayground={false}
@@ -215,7 +212,10 @@ export default function Home() {
 
       {/* Playground Section - Only visible when logged in and not in preview mode */}
       {isLoggedIn && !previewMode && (
-        <section id="playground" className="max-w-[640px] mx-auto mt-16 space-y-4">
+        <section
+          id="playground"
+          className="max-w-[640px] mx-auto mt-16 space-y-4"
+        >
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-xl font-bold text-gray-900">Playground</h2>
             <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
@@ -225,7 +225,7 @@ export default function Home() {
           {playgroundProducts.map((product) => (
             <ProductCard
               key={product.name}
-              id={product.name.toLowerCase().replace(/\s+/g, '-')}
+              id={product.name.toLowerCase().replace(/\s+/g, "-")}
               product={product}
               isLoggedIn={isLoggedIn && !previewMode}
               isPlayground={true}
@@ -238,10 +238,11 @@ export default function Home() {
       {isLoggedIn && (
         <button
           onClick={() => setPreviewMode(!previewMode)}
-          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${previewMode
-            ? "text-white bg-violet-600 hover:bg-violet-700"
-            : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
-            }`}
+          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${
+            previewMode
+              ? "text-white bg-violet-600 hover:bg-violet-700"
+              : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
+          }`}
           title={previewMode ? "Viewing as guest" : "View as guest"}
         >
           <EyeIcon isPreview={!previewMode} />
