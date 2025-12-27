@@ -435,40 +435,48 @@ function SideNav({
   items,
   activeId,
 }: {
-  items: { id: string; name: string }[];
+  items: { id: string; name: string; parent?: string }[];
   activeId: string;
 }) {
+  const activeItem = items.find((i) => i.id === activeId);
+  const activeParent = activeItem?.parent || (activeItem?.id && items.some(i => i.parent === activeItem.id) ? activeItem.id : null);
+
   return (
-    <nav className="fixed left-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-4 z-40">
-      {items.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          className={`group flex items-center gap-3 transition-all ${activeId === item.id ? "translate-x-2" : "hover:translate-x-1"
-            }`}
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById(item.id)?.scrollIntoView({
-              behavior: "smooth",
-            });
-          }}
-        >
-          <div
-            className={`w-1.5 h-1.5 rounded-full transition-all ${activeId === item.id
-              ? "bg-black scale-150"
-              : "bg-gray-300 group-hover:bg-gray-400"
-              }`}
-          />
-          <span
-            className={`text-xs font-semibold tracking-wider uppercase transition-all ${activeId === item.id
-              ? "text-black opacity-100"
-              : "text-gray-400 opacity-0 group-hover:opacity-100"
-              }`}
+    <nav className="fixed left-8 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 z-40">
+      {items.map((item) => {
+        const isSubItem = !!item.parent;
+        const isSelected = activeId === item.id;
+        const shouldShowText = isSelected || (item.parent && item.parent === activeParent) || (item.id === activeParent);
+
+        return (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className={`group flex items-center gap-3 transition-all ${isSelected ? "translate-x-2" : "hover:translate-x-1"} ${isSubItem ? "ml-4" : ""}`}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById(item.id)?.scrollIntoView({
+                behavior: "smooth",
+              });
+            }}
           >
-            {item.name}
-          </span>
-        </a>
-      ))}
+            <div
+              className={`w-1.5 h-1.5 rounded-full transition-all ${isSelected
+                ? "bg-black scale-150"
+                : "bg-gray-300 group-hover:bg-gray-400"
+                }`}
+            />
+            <span
+              className={`text-xs font-semibold tracking-wider uppercase transition-all ${shouldShowText
+                ? "text-black opacity-100"
+                : "text-gray-400 opacity-0 group-hover:opacity-100"
+                }`}
+            >
+              {item.name}
+            </span>
+          </a>
+        );
+      })}
     </nav>
   );
 }
@@ -554,6 +562,7 @@ export default function Home() {
     ...products.map((p) => ({
       id: p.name.toLowerCase().replace(/\s+/g, "-"),
       name: p.name,
+      parent: "projects",
     })),
     ...(isLoggedIn && !previewMode
       ? [
@@ -561,6 +570,7 @@ export default function Home() {
         ...playgroundProducts.map((p) => ({
           id: p.name.toLowerCase().replace(/\s+/g, "-"),
           name: p.name,
+          parent: "playground",
         })),
       ]
       : []),
