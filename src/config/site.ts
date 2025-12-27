@@ -84,7 +84,7 @@ export const products: Product[] = [
           },
         ],
       },
-      "daba-monitor": {
+      "data-monitor": {
         environments: [
           {
             name: "prod dashboard",
@@ -171,6 +171,26 @@ export const playgroundProducts: Product[] = [
             name: "staging",
             url: "https://staging--michael345.netlify.app/",
             description: "Deployed on Netlify, isantan71",
+          },
+        ],
+      },
+    },
+  },
+  {
+    name: "Church Noodlism",
+    description: "Flying noodlism church official website",
+    categories: {
+      frontend: {
+        environments: [
+          {
+            name: "prod",
+            url: "https://church.noodlism.345321.xyz/",
+            description: "Deployed on Vercel, dominy0193",
+          },
+          {
+            name: "staging",
+            url: "https://staging-church-noodlism.vercel.app/",
+            description: "Deployed on Vercel, dominy0193",
           },
         ],
       },
