@@ -23,7 +23,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [activeId, setActiveId] = useState("projects");
+  const [activeId, setActiveId] = useState("top");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -34,13 +34,13 @@ export default function Home() {
     }
 
     const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
-      let current = "projects";
+      const sections = document.querySelectorAll("header[id], section[id]");
+      let current = "top";
 
       for (const section of sections) {
         const sectionTop = (section as HTMLElement).offsetTop;
         if (window.pageYOffset >= sectionTop - 150) {
-          current = section.getAttribute("id") || "projects";
+          current = section.getAttribute("id") || "top";
         }
       }
       setActiveId(current);
@@ -92,6 +92,7 @@ export default function Home() {
   };
 
   const navItems = [
+    { id: "top", name: "Top" },
     { id: "projects", name: "Projects" },
     ...products.map((p) => ({
       id: p.name.toLowerCase().replace(/\s+/g, "-"),
@@ -115,7 +116,7 @@ export default function Home() {
       <SideNav items={navItems} activeId={activeId} />
       <MiniMapEdgeBar items={navItems} activeId={activeId} />
       {/* Header */}
-      <header className="text-center pt-24 md:pt-48 space-y-4">
+      <header id="top" className="text-center pt-24 md:pt-48 space-y-4">
         {/* Login/Logout Buttons - Top Right */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {!isLoggedIn ? (
@@ -241,8 +242,8 @@ export default function Home() {
         <button
           onClick={() => setPreviewMode(!previewMode)}
           className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${previewMode
-              ? "text-white bg-violet-600 hover:bg-violet-700"
-              : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
+            ? "text-white bg-violet-600 hover:bg-violet-700"
+            : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
             }`}
           title={previewMode ? "Viewing as guest" : "View as guest"}
         >
