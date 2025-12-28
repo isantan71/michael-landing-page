@@ -54,7 +54,7 @@ export const products: Product[] = [
     name: "MovieFans",
     description: "Movie database and subtitle management platform",
     categories: {
-      frontend: {
+      Frontend: {
         port: 3008,
         environments: [
           {
@@ -69,7 +69,7 @@ export const products: Product[] = [
           },
         ],
       },
-      backend: {
+      Backend: {
         port: 8008,
         environments: [
           {
@@ -104,7 +104,7 @@ export const products: Product[] = [
     name: "Super Swiss",
     description: "AI-powered Swiss army knife toolkit",
     categories: {
-      frontend: {
+      Frontend: {
         port: 3012,
         environments: [
           {
@@ -119,7 +119,7 @@ export const products: Product[] = [
           },
         ],
       },
-      backend: {
+      Backend: {
         port: 8012,
         environments: [
           {
@@ -135,7 +135,7 @@ export const products: Product[] = [
     name: "OneYumi",
     description: "Modern web application platform",
     categories: {
-      frontend: {
+      Frontend: {
         port: 3000,
         environments: [
           {
@@ -159,7 +159,7 @@ export const playgroundProducts: Product[] = [
     name: "Michael Landing Page",
     description: "Experimental AI chat interface with custom models",
     categories: {
-      frontend: {
+      Frontend: {
         port: 3013,
         environments: [
           {
@@ -180,7 +180,7 @@ export const playgroundProducts: Product[] = [
     name: "Church Noodlism",
     description: "Flying noodlism church official website",
     categories: {
-      frontend: {
+      Frontend: {
         environments: [
           {
             name: "prod",
