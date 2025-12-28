@@ -27,19 +27,24 @@ export function ProductCard({
   );
 
   const [activeCategory, setActiveCategory] = useState(
-    availableCategories[0] || "frontend",
+    availableCategories[0] || "",
   );
 
   const bgColor = generateColorFromString(product.name);
 
   // Guest user logic for non-playground products
   if (!isLoggedIn && !isPlayground) {
-    const prodEnv = product.categories.frontend?.environments?.find(
-      (e) => e.name === "prod",
-    );
+    // Try to find the production environment for the first available category
+    const mainCategory = availableCategories[0];
+    const categoryData = mainCategory
+      ? (product.categories[mainCategory] as
+        | CategoryWithPort
+        | CategoryWithoutPort)
+      : null;
+    const prodEnv = categoryData?.environments?.find((e) => e.name === "prod");
 
     if (!prodEnv) {
-      return null; // Don't show product if no prod frontend URL
+      return null; // Don't show product if no production environment in the first category
     }
 
     return (
@@ -86,11 +91,10 @@ export function ProductCard({
   return (
     <div
       id={id}
-      className={`p-5 rounded-xl border shadow-sm transition-all ${
-        isPlayground
+      className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
           ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
           : "bg-white border-gray-200"
-      }`}
+        }`}
     >
       <article>
         {/* Header Section */}
