@@ -84,7 +84,7 @@ export const products: Product[] = [
           },
         ],
       },
-      "data-monitor": {
+      "Data-Monitor": {
         environments: [
           {
             name: "prod dashboard",

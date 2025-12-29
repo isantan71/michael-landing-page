@@ -38,8 +38,8 @@ export function ProductCard({
     const mainCategory = availableCategories[0];
     const categoryData = mainCategory
       ? (product.categories[mainCategory] as
-        | CategoryWithPort
-        | CategoryWithoutPort)
+          | CategoryWithPort
+          | CategoryWithoutPort)
       : null;
     const prodEnv = categoryData?.environments?.find((e) => e.name === "prod");
 
@@ -91,10 +91,11 @@ export function ProductCard({
   return (
     <div
       id={id}
-      className={`p-5 rounded-xl border shadow-sm transition-all ${isPlayground
+      className={`p-5 rounded-xl border shadow-sm transition-all ${
+        isPlayground
           ? "bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200"
           : "bg-white border-gray-200"
-        }`}
+      }`}
     >
       <article>
         {/* Header Section */}
