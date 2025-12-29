@@ -105,14 +105,14 @@ export default function Home() {
           name: p.name,
           parent: "playground",
         })),
+        { id: "resources", name: "Resources" },
+        ...resourceProducts.map((p) => ({
+          id: p.name.toLowerCase().replace(/\s+/g, "-"),
+          name: p.name,
+          parent: "resources",
+        })),
       ]
       : []),
-    { id: "resources", name: "Resources" },
-    ...resourceProducts.map((p) => ({
-      id: p.name.toLowerCase().replace(/\s+/g, "-"),
-      name: p.name,
-      parent: "resources",
-    })),
   ];
 
   return (
@@ -240,24 +240,26 @@ export default function Home() {
         </section>
       )}
 
-      {/* Resources Section */}
-      <section
-        id="resources"
-        className="max-w-[640px] mx-auto mt-16 space-y-4"
-      >
-        <div className="flex items-center gap-3 mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Resources</h2>
-        </div>
-        {resourceProducts.map((product) => (
-          <ProductCard
-            key={product.name}
-            id={product.name.toLowerCase().replace(/\s+/g, "-")}
-            product={product}
-            isLoggedIn={true} // Force full view for resources
-            isPlayground={false}
-          />
-        ))}
-      </section>
+      {/* Resources Section - Only visible when logged in and not in preview mode */}
+      {isLoggedIn && !previewMode && (
+        <section
+          id="resources"
+          className="max-w-[640px] mx-auto mt-16 space-y-4"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-xl font-bold text-gray-900">Resources</h2>
+          </div>
+          {resourceProducts.map((product) => (
+            <ProductCard
+              key={product.name}
+              id={product.name.toLowerCase().replace(/\s+/g, "-")}
+              product={product}
+              isLoggedIn={true} // Force full view for resources
+              isPlayground={false}
+            />
+          ))}
+        </section>
+      )}
 
       {/* Floating Preview Button - Only visible when logged in */}
       {isLoggedIn && (
