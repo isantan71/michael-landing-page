@@ -197,3 +197,40 @@ export const playgroundProducts: Product[] = [
     },
   },
 ];
+
+export const resourceProducts: Product[] = [
+  {
+    name: "Downloadables",
+    description: "Multi-platform utilities and productivity tools",
+    categories: {
+      Android: {
+        environments: [
+          {
+            name: "RustDesk",
+            url: "/downloads/android/rustdesk.apk",
+            description: "Remote desktop software",
+          },
+          {
+            name: "Resilio Sync",
+            url: "/downloads/android/resilio-sync.apk",
+            description: "Fast, private file sharing and sync",
+          },
+        ],
+      },
+      macOS: {
+        environments: [
+          {
+            name: "RustDesk",
+            url: "/downloads/macos/rustdesk.dmg",
+            description: "Remote desktop software",
+          },
+          {
+            name: "Resilio Sync",
+            url: "/downloads/macos/resilio-sync.dmg",
+            description: "Fast, private file sharing and sync",
+          },
+        ],
+      },
+    },
+  },
+];

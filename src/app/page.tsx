@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { products, playgroundProducts, socialLinks } from "@/config/site";
+import { products, playgroundProducts, resourceProducts, socialLinks } from "@/config/site";
 
 // Icons
 import { TwitterIcon } from "@/components/icons/TwitterIcon";
@@ -99,14 +99,20 @@ export default function Home() {
     })),
     ...(isLoggedIn && !previewMode
       ? [
-          { id: "playground", name: "Playground" },
-          ...playgroundProducts.map((p) => ({
-            id: p.name.toLowerCase().replace(/\s+/g, "-"),
-            name: p.name,
-            parent: "playground",
-          })),
-        ]
+        { id: "playground", name: "Playground" },
+        ...playgroundProducts.map((p) => ({
+          id: p.name.toLowerCase().replace(/\s+/g, "-"),
+          name: p.name,
+          parent: "playground",
+        })),
+      ]
       : []),
+    { id: "resources", name: "Resources" },
+    ...resourceProducts.map((p) => ({
+      id: p.name.toLowerCase().replace(/\s+/g, "-"),
+      name: p.name,
+      parent: "resources",
+    })),
   ];
 
   return (
@@ -234,15 +240,33 @@ export default function Home() {
         </section>
       )}
 
+      {/* Resources Section */}
+      <section
+        id="resources"
+        className="max-w-[640px] mx-auto mt-16 space-y-4"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <h2 className="text-xl font-bold text-gray-900">Resources</h2>
+        </div>
+        {resourceProducts.map((product) => (
+          <ProductCard
+            key={product.name}
+            id={product.name.toLowerCase().replace(/\s+/g, "-")}
+            product={product}
+            isLoggedIn={true} // Force full view for resources
+            isPlayground={false}
+          />
+        ))}
+      </section>
+
       {/* Floating Preview Button - Only visible when logged in */}
       {isLoggedIn && (
         <button
           onClick={() => setPreviewMode(!previewMode)}
-          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${
-            previewMode
-              ? "text-white bg-violet-600 hover:bg-violet-700"
-              : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
-          }`}
+          className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg shadow-lg transition-all z-50 ${previewMode
+            ? "text-white bg-violet-600 hover:bg-violet-700"
+            : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:shadow-xl"
+            }`}
           title={previewMode ? "Viewing as guest" : "View as guest"}
         >
           <EyeIcon isPreview={!previewMode} />
