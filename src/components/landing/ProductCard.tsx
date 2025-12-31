@@ -106,14 +106,14 @@ export function ProductCard({
       <article>
         {/* Header Section */}
         <div className="flex items-start justify-between gap-4 mb-5">
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-4 w-full">
             <ProductIcon bgColor={bgColor} name={product.name} />
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-1">
+              <div className="flex items-center justify-between mb-1">
                 <h3 className="font-bold text-lg text-gray-900">{product.name}</h3>
-                {"port" in currentSection && currentSection.port && (
-                  <PortBadge port={currentSection.port} />
-                )}
+                <PortBadge
+                  port={"port" in currentSection ? currentSection.port : undefined}
+                />
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
                 {product.description}

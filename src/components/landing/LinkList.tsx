@@ -24,7 +24,7 @@ export function LinkList({
                             ? isPlayground
                                 ? "p-4 md:p-3.5 bg-white rounded-xl border-2 border-violet-200 hover:border-violet-400 shadow-sm hover:shadow-md"
                                 : "p-4 md:p-3.5 bg-white rounded-xl border-2 border-gray-200 hover:border-gray-400 shadow-sm hover:shadow-md"
-                            : "p-2 md:p-1.5 bg-gray-50/20 rounded-md border border-dashed border-gray-200 hover:border-gray-300 hover:bg-gray-100/40 opacity-60 hover:opacity-100 mt-1"
+                            : "p-2 md:p-1.5 bg-gray-50/40 rounded-md border border-dashed border-gray-200 hover:border-gray-300 hover:bg-gray-100/60 mt-1"
                             }`}
                     >
                         <div className="flex items-start justify-between gap-2">
@@ -36,14 +36,14 @@ export function LinkList({
                                     <span
                                         className={`tracking-wide ${isStandard
                                             ? `text-[13px] font-bold uppercase ${isPlayground ? "text-violet-700" : "text-gray-900"}`
-                                            : "text-[9px] font-mono font-semibold text-gray-400 uppercase tracking-tighter"
+                                            : `text-[9px] font-mono font-bold uppercase tracking-tighter ${isPlayground ? "text-violet-700" : "text-gray-700"}`
                                             }`}
                                     >
                                         {link.name}
                                     </span>
                                 </div>
                                 {link.description && (
-                                    <p className={`${isStandard ? "text-xs mb-2.5" : "text-[9px] mb-1.5"} text-gray-400 leading-relaxed font-medium`}>
+                                    <p className={`${isStandard ? "text-xs mb-2.5" : "text-[9px] mb-1.5"} text-gray-600 leading-relaxed font-medium`}>
                                         {link.description}
                                     </p>
                                 )}
