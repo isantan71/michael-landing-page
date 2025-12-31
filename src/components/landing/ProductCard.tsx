@@ -52,7 +52,7 @@ export function ProductCard({
     return (
       <div
         id={id}
-        className="bg-white p-5 rounded-xl border border-amber-200 bg-gradient-to-br from-white to-amber-50/20 shadow-sm hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group"
+        className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all cursor-pointer group"
         onClick={() => {
           if (typeof window !== "undefined" && firstUrl) {
             window.open(firstUrl, "_blank", "noopener,noreferrer");
@@ -62,22 +62,17 @@ export function ProductCard({
         <article className="flex items-start gap-4">
           <ProductIcon bgColor={bgColor} name={product.name} />
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-base">{product.name}</h3>
-              <span className="px-1.5 py-0.5 rounded-full bg-amber-100 text-[10px] font-bold text-amber-600 uppercase tracking-tighter">
-                Primary
-              </span>
-            </div>
+            <h3 className="font-bold text-base mb-1">{product.name}</h3>
             <p className="text-sm text-gray-600 leading-relaxed mb-2">
               {product.description}
             </p>
-            <div className="flex items-center gap-1.5 text-xs font-mono text-amber-600 font-medium">
-              <span className="uppercase tracking-widest text-[9px] bg-amber-100 px-1 rounded">Link:</span>
+            <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
+              <span className="uppercase tracking-widest text-[9px] bg-gray-100 px-1 rounded">Open:</span>
               <span className="truncate">{firstLink.name}</span>
             </div>
           </div>
           <svg
-            className="w-5 h-5 text-amber-400 self-start md:self-center flex-shrink-0 transition-transform group-hover:translate-x-0.5"
+            className="w-5 h-5 text-gray-400 self-start md:self-center flex-shrink-0 transition-transform group-hover:translate-x-0.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
