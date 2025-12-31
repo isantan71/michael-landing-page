@@ -30,9 +30,7 @@ export interface Product {
   name: string;
   description: string;
   categories: {
-    frontend?: CategoryWithPort;
-    backend?: CategoryWithPort;
-    other?: CategoryWithoutPort;
+    [key: string]: CategoryWithPort | CategoryWithoutPort;
   };
 }
 
@@ -56,8 +54,8 @@ export const products: Product[] = [
     name: "MovieFans",
     description: "Movie database and subtitle management platform",
     categories: {
-      frontend: {
-        port: 3000,
+      Frontend: {
+        port: 3008,
         environments: [
           {
             name: "prod",
@@ -71,8 +69,8 @@ export const products: Product[] = [
           },
         ],
       },
-      backend: {
-        port: 8000,
+      Backend: {
+        port: 8008,
         environments: [
           {
             name: "prod",
@@ -86,7 +84,7 @@ export const products: Product[] = [
           },
         ],
       },
-      "daba-monitor": {
+      "Data-Monitor": {
         environments: [
           {
             name: "prod dashboard",
@@ -106,8 +104,8 @@ export const products: Product[] = [
     name: "Super Swiss",
     description: "AI-powered Swiss army knife toolkit",
     categories: {
-      frontend: {
-        port: 3000,
+      Frontend: {
+        port: 3012,
         environments: [
           {
             name: "prod",
@@ -121,8 +119,8 @@ export const products: Product[] = [
           },
         ],
       },
-      backend: {
-        port: 8080,
+      Backend: {
+        port: 8012,
         environments: [
           {
             name: "prod",
@@ -137,7 +135,7 @@ export const products: Product[] = [
     name: "OneYumi",
     description: "Modern web application platform",
     categories: {
-      frontend: {
+      Frontend: {
         port: 3000,
         environments: [
           {
@@ -161,8 +159,8 @@ export const playgroundProducts: Product[] = [
     name: "Michael Landing Page",
     description: "Experimental AI chat interface with custom models",
     categories: {
-      frontend: {
-        port: 3000,
+      Frontend: {
+        port: 3013,
         environments: [
           {
             name: "prod",
@@ -173,6 +171,68 @@ export const playgroundProducts: Product[] = [
             name: "staging",
             url: "https://staging--michael345.netlify.app/",
             description: "Deployed on Netlify, isantan71",
+          },
+        ],
+      },
+    },
+  },
+  {
+    name: "Church Noodlism",
+    description: "Flying noodlism church official website",
+    categories: {
+      Frontend: {
+        environments: [
+          {
+            name: "prod",
+            url: "https://church.noodlism.345321.xyz/",
+            description: "Deployed on Vercel, dominy0193",
+          },
+          {
+            name: "staging",
+            url: "https://staging-church-noodlism.vercel.app/",
+            description: "Deployed on Vercel, dominy0193",
+          },
+        ],
+      },
+    },
+  },
+];
+
+export const resourceProducts: Product[] = [
+  {
+    name: "Downloadables",
+    description: "Multi-platform utilities and productivity tools",
+    categories: {
+      Android: {
+        environments: [
+          {
+            name: "ncat",
+            url: "https://static.oneyumi.com/resilio/android/ncat-3.4.0.apk",
+            description: "Official ncat",
+          },
+          {
+            name: "ncat no ads",
+            url: "https://static.oneyumi.com/resilio/android/%E7%BD%91%E9%A3%9E%E7%8C%AB%20Ver.3.4.0%20%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%89%88.apk",
+            description: "ncat no ads",
+          },
+          {
+            name: "Resilio Sync",
+            url: "https://static.oneyumi.com/resilio/android/resilio_2.8.1.apk",
+            description: "Fast, private file sharing and sync",
+          },
+        ],
+      },
+      macOS: {
+        environments: [
+          {
+            name: "RustDesk",
+            url: "/downloads/macos/rustdesk.dmg",
+            description: "Remote desktop software",
+          },
+          {
+            name: "Resilio Sync",
+            url: "https://static.oneyumi.com/resilio/",
+            description: "Fast, private file sharing and sync",
           },
         ],
       },
