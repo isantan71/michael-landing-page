@@ -206,13 +206,18 @@ export const resourceProducts: Product[] = [
       Android: {
         environments: [
           {
-            name: "RustDesk",
-            url: "/downloads/android/rustdesk.apk",
-            description: "Remote desktop software",
+            name: "ncat",
+            url: "https://static.oneyumi.com/resilio/android/ncat-3.4.0.apk",
+            description: "Official ncat",
+          },
+          {
+            name: "ncat no ads",
+            url: "https://static.oneyumi.com/resilio/android/%E7%BD%91%E9%A3%9E%E7%8C%AB%20Ver.3.4.0%20%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%89%88.apk",
+            description: "ncat no ads",
           },
           {
             name: "Resilio Sync",
-            url: "/downloads/android/resilio-sync.apk",
+            url: "https://static.oneyumi.com/resilio/android/resilio_2.8.1.apk",
             description: "Fast, private file sharing and sync",
           },
         ],
@@ -226,7 +231,7 @@ export const resourceProducts: Product[] = [
           },
           {
             name: "Resilio Sync",
-            url: "/downloads/macos/resilio-sync.dmg",
+            url: "https://static.oneyumi.com/resilio/",
             description: "Fast, private file sharing and sync",
           },
         ],
