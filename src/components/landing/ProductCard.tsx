@@ -9,6 +9,7 @@ import {
 } from "@/config/site";
 import { ProductIcon } from "./ProductIcon";
 import { SectionTabs } from "./SectionTabs";
+import { PortBadge } from "./PortBadge";
 import { LinkList } from "./LinkList";
 
 export function ProductCard({
@@ -104,13 +105,20 @@ export function ProductCard({
     >
       <article>
         {/* Header Section */}
-        <div className="flex items-start gap-4 mb-5">
-          <ProductIcon bgColor={bgColor} name={product.name} />
-          <div className="flex-1">
-            <h3 className="font-bold text-base mb-1">{product.name}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              {product.description}
-            </p>
+        <div className="flex items-start justify-between gap-4 mb-5">
+          <div className="flex items-start gap-4">
+            <ProductIcon bgColor={bgColor} name={product.name} />
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-1">
+                <h3 className="font-bold text-lg text-gray-900">{product.name}</h3>
+                {"port" in currentSection && currentSection.port && (
+                  <PortBadge port={currentSection.port} />
+                )}
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                {product.description}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -127,9 +135,6 @@ export function ProductCard({
             {currentSection?.links && (
               <LinkList
                 links={currentSection.links}
-                port={
-                  "port" in currentSection ? currentSection.port : undefined
-                }
                 isPlayground={isPlayground}
                 isFirstSection={activeSection === availableSections[0]}
               />

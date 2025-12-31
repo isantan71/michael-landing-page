@@ -248,14 +248,17 @@ export default function Home() {
         >
           <div className="flex items-center gap-3 mb-6">
             <h2 className="text-xl font-bold text-gray-900">Resources</h2>
+            <span className="px-2 py-0.5 text-xs font-medium bg-violet-100 text-violet-700 rounded-full">
+              Private
+            </span>
           </div>
           {resourceProducts.map((product) => (
             <ProductCard
               key={product.name}
               id={product.name.toLowerCase().replace(/\s+/g, "-")}
               product={product}
-              isLoggedIn={true} // Force full view for resources
-              isPlayground={false}
+              isLoggedIn={true}
+              isPlayground={true}
             />
           ))}
         </section>
