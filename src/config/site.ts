@@ -212,12 +212,14 @@ export const resourceProducts: Product[] = [
           },
           {
             name: "Rustdesk v1.4.4",
-            urls: ["/downloads/android/rustdesk-1.4.4-aarch64-signed.apk"],
+            urls: ["/downloads/android/rustdesk-1.4.4-aarch64-signed.apk",
+              "/downloads/android/rustdesk-relay-config.txt"],
             description: "Remote desktop software",
           },
           {
             name: "v2rayNG v1.10.2",
-            urls: ["/downloads/android/v2rayNG_1.10.32_arm64-v8a.apk"],
+            urls: ["/downloads/android/v2rayNG_1.10.32_arm64-v8a.apk",
+              "/downloads/android/v2rayng-subscription.txt"],
             description: "V2Ray client for Android",
           },
           {
