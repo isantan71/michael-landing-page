@@ -207,47 +207,38 @@ export const resourceProducts: Product[] = [
         links: [
           {
             name: "Resilio Sync v2.8.1",
-            urls: ["https://static.oneyumi.com/resilio/android/resilio_2.8.1.apk"],
+            urls: ["/downloads/android/ResilioSync_2.8.1.apk"],
             description: "Fast, private file sharing and sync",
           },
           {
             name: "Rustdesk v1.4.4",
-            urls: [
-              "https://static.oneyumi.com/resilio/android/rustdesk-1.4.4-aarch64-signed.apk",
-            ],
+            urls: ["/downloads/android/rustdesk-1.4.4-aarch64-signed.apk",
+              "/downloads/android/rustdesk-relay-config.txt"],
             description: "Remote desktop software",
           },
           {
             name: "v2rayNG v1.10.2",
-            urls: ["https://static.oneyumi.com/resilio/android/v2rayNG_1.10.2.apk"],
+            urls: ["/downloads/android/v2rayNG_1.10.32_arm64-v8a.apk",
+              "/downloads/android/v2rayng-subscription.txt"],
             description: "V2Ray client for Android",
           },
           {
             name: "好好看影视 v3.3.9 无广告",
-            urls: [
-              "https://static.oneyumi.com/resilio/android/%E5%A5%BD%E5%A5%BD%E7%9C%8B%E5%BD%B1%E8%A7%86%20v3.3.9%E6%97%A0%E5%B9%BF%E5%91%8A%E7%BA%AF%E5%87%80%E7%89%88.apk",
-            ],
-            description: "ncat no ads",
+            urls: ["/downloads/android/好好看影视 v3.3.9无广告纯净版.apk"],
+            description: "Movies app no ads",
           },
           {
             name: "网飞猫 v3.4.0 去广告版",
-            urls: [
-              "https://static.oneyumi.com/resilio/android/%E7%BD%91%E9%A3%9E%E7%8C%AB%20Ver.3.4.0%20%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%89%88.apk",
-            ],
-            description: "ncat no ads",
+            urls: ["/downloads/android/网飞猫 Ver.3.4.0 去广告版.apk"],
+            description: "ncat.app no ads",
           },
         ],
       },
       "Mac OS": {
         links: [
           {
-            name: "RustDesk",
-            urls: ["/downloads/macos/rustdesk.dmg"],
-            description: "Remote desktop software",
-          },
-          {
             name: "Resilio Sync",
-            urls: ["https://static.oneyumi.com/resilio/"],
+            urls: ["/downloads/macos/Resilio-Sync-2.8.1.dmg"],
             description: "Fast, private file sharing and sync",
           },
         ],
