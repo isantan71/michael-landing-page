@@ -24,26 +24,24 @@ export function LinkList({
                             ? isPlayground
                                 ? "p-4 md:p-3.5 bg-white rounded-xl border-2 border-violet-200 hover:border-violet-400 shadow-sm hover:shadow-md"
                                 : "p-4 md:p-3.5 bg-white rounded-xl border-2 border-gray-200 hover:border-gray-400 shadow-sm hover:shadow-md"
-                            : "p-2 md:p-1.5 bg-gray-50/40 rounded-md border border-dashed border-gray-200 hover:border-gray-300 hover:bg-gray-100/60 mt-1"
+                            : "p-2.5 md:p-2 bg-gray-50/40 rounded-lg border border-dashed border-gray-200 hover:border-gray-300 hover:bg-gray-100/60 mt-1"
                             }`}
                     >
                         <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1.5">
                                     {isStandard && (
-                                        <div className={`w-1.5 h-1.5 rounded-full ${isPlayground ? "bg-violet-500" : "bg-black"}`} />
+                                        <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isPlayground ? "bg-violet-500" : "bg-black"}`} />
                                     )}
                                     <span
-                                        className={`tracking-wide ${isStandard
-                                            ? `text-[13px] font-bold uppercase ${isPlayground ? "text-violet-700" : "text-gray-900"}`
-                                            : `text-[9px] font-mono font-bold uppercase tracking-tighter ${isPlayground ? "text-violet-700" : "text-gray-700"}`
+                                        className={`text-xs font-bold ${isPlayground ? "text-violet-700" : "text-gray-900"
                                             }`}
                                     >
                                         {link.name}
                                     </span>
                                 </div>
                                 {link.description && (
-                                    <p className={`${isStandard ? "text-xs mb-2.5" : "text-[9px] mb-1.5"} text-gray-600 leading-relaxed font-medium`}>
+                                    <p className="text-xs text-gray-600 mb-2 leading-relaxed">
                                         {link.description}
                                     </p>
                                 )}
@@ -54,11 +52,11 @@ export function LinkList({
                                             href={url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`${isStandard ? "text-[13px] font-semibold" : "text-[10px]"} break-all font-mono leading-relaxed flex items-center gap-2 group/url transition-colors ${isPlayground ? "text-violet-500 hover:text-violet-700" : "text-gray-500 hover:text-gray-900"
+                                            className={`text-xs break-all font-bold leading-relaxed flex items-center gap-2 group/url transition-colors ${isPlayground ? "text-violet-500 hover:text-violet-700" : "text-gray-500 hover:text-gray-900"
                                                 }`}
                                         >
                                             <svg
-                                                className={`${isStandard ? "w-3.5 h-3.5" : "w-3 h-3"} flex-shrink-0 transition-colors ${isPlayground
+                                                className={`w-3.5 h-3.5 flex-shrink-0 transition-colors ${isPlayground
                                                     ? "text-violet-300 group-hover/url:text-violet-500"
                                                     : "text-gray-300 group-hover/url:text-gray-500"
                                                     }`}
@@ -69,7 +67,7 @@ export function LinkList({
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
-                                                    strokeWidth={isStandard ? 2.5 : 2}
+                                                    strokeWidth={2}
                                                     d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                                                 />
                                             </svg>
